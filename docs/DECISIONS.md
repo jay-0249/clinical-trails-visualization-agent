@@ -312,3 +312,12 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - [x] 10 non-example queries produce valid responses — `test_anti_overfit_query_produces_viz` (6.1-6.8, 6.10) + `test_6_9_vague_override_is_handled`.
 - [x] No overfitting — the only code change was a generic `filter.phase`→`filter.advanced` API translation, not query-specific logic.
 - [x] Error handling — `test_7_1`/`7_2`/`7_3` (zero results, short query 422, invalid enum 400).
+
+---
+
+## Phase 12 — Polish
+
+**2026-07-21 — Makefile + lint**
+- `Makefile`: `make test` (hermetic), `make test-integration` (live), `make lint` (ruff), `make run` (uvicorn). `ruff` added as a dev tool; `ruff check app tests` passes clean with defaults (no custom config needed).
+- Reviewed `docs/DECISIONS.md`: all phases 0–11 logged. README left as-is (final version supplied by the user).
+- `make test` → 100 hermetic tests pass.
