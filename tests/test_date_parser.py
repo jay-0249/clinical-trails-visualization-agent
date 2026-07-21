@@ -99,7 +99,7 @@ def test_timed_stage_records_duration():
 
 def test_config_loads_defaults():
     s = Settings(_env_file=None)
-    assert s.llm_model_query_analyzer == "gpt-4o"
+    assert s.llm_model_query_analyzer == "gpt-4o-2024-08-06"
     assert s.llm_model_viz_generator == "gpt-5.4-nano"
     assert s.llm_model_extractor == "gpt-4o-mini"
     assert s.ct_api_base_url == "https://clinicaltrials.gov/api/v2"

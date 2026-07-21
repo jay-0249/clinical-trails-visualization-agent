@@ -20,7 +20,8 @@ class Settings(BaseSettings):
 
     # LLM (OpenAI) — one model per stage
     openai_api_key: str | None = None
-    llm_model_query_analyzer: str = "gpt-4o"  # Stage 1: planning
+    # Stage 1: planning. Dated snapshot — this key has no bare `gpt-4o` alias access.
+    llm_model_query_analyzer: str = "gpt-4o-2024-08-06"
     llm_model_viz_generator: str = "gpt-5.4-nano"  # Stage 4: viz spec (reliable hints)
     llm_model_extractor: str = "gpt-4o-mini"  # Stage 2.5: extraction (v2)
 

@@ -245,3 +245,33 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - [x] encoding matches type_category contract — `_verify_encoding` (+ retry on mismatch).
 - [x] description justifies type choice — prompt-enforced; validated non-empty.
 - [x] title is specific, rendering_hints present — model emits hints (gpt-5.4-nano) with a code fallback guaranteeing presence.
+
+---
+
+## Phase 9 — Orchestrator + Data Retriever
+
+**2026-07-21 — Query-analyzer model: pinned dated snapshot**
+- **Chose:** `gpt-4o-2024-08-06` (config default, `.env`, `.env.example`) for `llm_model_query_analyzer`.
+- **Because:** This project's OpenAI key has access to the dated snapshot but **not** the bare `gpt-4o` alias (403 `model_not_found`). A Phase-8 config "normalization" had rewritten the pin to `gpt-4o` and broke Stage 1; restored to the accessible snapshot. A deployment whose key has alias access can switch back to `gpt-4o`.
+
+**2026-07-21 — execute(): per-request pipeline with request_id + timings**
+- Generates a UUID4 `request_id`, stamps it on the (per-request) `CTGovClient` for log correlation, threads a fresh `PipelineContext`, and wraps each stage in `timed_stage`. `task_data_map` + entity-tag selection means data is fetched once per requirement and shared across tasks (no redundant API calls).
+
+**2026-07-21 — merge_and_validate: three input modes**
+- `query_only`: params ignored, recorded in `ignored_params`.
+- `override`: structured hints are the sole search/filter source; a comparison collapses to a single entity (with a warning) and `entity_tag` is stripped from group_by.
+- `supplement`: query is primary; params confirm/add and win conflicts (logged). An intervention hint applies **only to the matching comparison arm** (by `entity_tag`), so "Drug A vs Drug B" isn't flattened.
+
+**2026-07-21 — Errors -> structured ErrorResponse**
+- `build_error_response` maps every pipeline exception (HTTPException, IntentValidationError, QueryAnalysisError, AggregationError, VizGenerationError, generic) to an `ErrorResponse` with code/message/suggestion + request_id. Used here and by the Phase 10 endpoint.
+
+**Known ceilings (`ponytail:` deferrals):**
+- `start_year`/`end_year` hints are recorded in the interpretation but not yet applied as a hard CT.gov filter (no simple year param in the documented v2 set) — v2 refinement.
+- `field_stats` / `study_detail` strategies are routed best-effort (field/nct_id pulled from `search_params`); the record-level `study_search` path is the fully-exercised one.
+
+**Checkpoint (from PLANNING.md):**
+- [x] Full pipeline: query in → PipelineResponse out — `test_e2e_simple_query`.
+- [x] request_id in response and all logs — `meta.request_id` + `pipeline_start/complete` events.
+- [x] stage_timings populated — 4 stages timed (query_analysis, data_retrieval, aggregation_*, viz_generation_*).
+- [x] input_interpretation populated — supplement/override/query_only, `test_*` merge cases.
+- [x] Errors produce structured ErrorResponse — `build_error_response` + hermetic tests.
