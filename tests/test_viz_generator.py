@@ -7,9 +7,25 @@ encoding follows the contract, and the data is injected verbatim.
 
 import pytest
 
-from app.pipeline.viz_generator import _normalize_encoding, _verify_encoding, generate
+from app.pipeline.viz_generator import (
+    _normalize_encoding,
+    _strip_citations,
+    _verify_encoding,
+    generate,
+)
 from app.schemas.intent import AggregationSpec, AnalysisTask
 from app.schemas.response import VisualizationSpec
+
+
+def test_strip_citations_does_not_mutate_originals():
+    original = [
+        {"phase_label": "P1", "value": 5, "citations": [{"nct_id": "N1", "excerpt": "e"}]},
+        {"phase_label": "P2", "value": 3},
+    ]
+    stripped = _strip_citations(original)
+    assert stripped[0] == {"phase_label": "P1", "value": 5}  # citations removed
+    assert stripped[1] == {"phase_label": "P2", "value": 3}
+    assert "citations" in original[0]  # CRITICAL: original untouched
 
 
 # --- hermetic: encoding key normalization (Bug 2 fix) ---------------------

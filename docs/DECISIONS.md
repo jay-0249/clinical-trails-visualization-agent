@@ -330,3 +330,11 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - `Dockerfile` (python:3.12-slim): install requirements, copy `app/`, run `uvicorn` bound to `$PORT` (Railway convention; defaults to 8000). `.env` is not baked in — `OPENAI_API_KEY` and overrides come from the environment (Railway injects them). `.dockerignore` keeps tests/docs/examples/`.env` out of the image. (No `deploy_docker_railway.md` guide was present; used standard FastAPI/Railway conventions.)
 - **Local smoke test passed:** build → run → `/health` (`cache_loaded: true`; the reference cache loads in-container in ~4s) → live query (`bar_chart/categorical`, 30 studies).
 - **Bug caught by the container test:** `.env` used inline (`# ...`) comments, which `docker run --env-file` keeps as part of the value (pydantic then failed to parse the int/float settings). Moved all comments in `.env` / `.env.example` to their own lines — supported by both pydantic's dotenv parser and Docker's `--env-file`.
+
+---
+
+## V2.1 — Deep Citations
+
+**2026-07-21 — Strip citations from the LLM prompt; inject into the response**
+- Citations already flowed end-to-end (aggregator collects `nct_id`+`excerpt` per group; viz_generator injects `spec.data = aggregated_data`). V2.1 removes citations from the data the LLM sees (`_strip_citations` — dict-comprehension copies, never mutates the originals) so they don't bloat the prompt or distract type selection, while the full data-with-citations is still injected into `spec.data`.
+- Verified live: `include_citations=true, max_citations_per_group=3` → each group carries 3 real citations (nct_id + excerpt). No-mutation guaranteed by `test_strip_citations_does_not_mutate_originals`.

@@ -90,6 +90,15 @@ def _client() -> AsyncOpenAI:
     return AsyncOpenAI(api_key=settings.openai_api_key)
 
 
+def _strip_citations(rows: list[dict]) -> list[dict]:
+    """Return copies without the `citations` key (never mutate the originals).
+
+    Citations bloat the LLM prompt and aren't needed for type/encoding choice;
+    they're injected back into spec.data after the call.
+    """
+    return [{k: v for k, v in row.items() if k != "citations"} for row in rows]
+
+
 def _data_columns(rows: list[dict]) -> set:
     cols: set = set()
     for r in rows:
@@ -153,7 +162,10 @@ async def generate(
     """
     client = _client()
     model = model or settings.llm_model_viz_generator
-    system_prompt = build_viz_generator_prompt(task, aggregated_data, original_query)
+    # The LLM chooses type/encoding from the data shape; citations are excluded
+    # from the prompt and injected into spec.data afterward.
+    data_for_prompt = _strip_citations(aggregated_data)
+    system_prompt = build_viz_generator_prompt(task, data_for_prompt, original_query)
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": "Output the VisualizationSpec JSON now."},
