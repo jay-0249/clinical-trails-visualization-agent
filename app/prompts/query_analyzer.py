@@ -3,6 +3,10 @@ from app.schemas.intent import QueryIntent
 
 # Prompt version: 2026-07-21-a
 # Changes: Initial version with input_mode, viz categories, reasoning framework
+# 2026-07-21-b (build fix, not a prompt-content change): builder now fills the
+#   {{...}} placeholders via str.replace (str.format cannot — it treats {{ }} as
+#   escaped literals); corrected enum keys to the live CT.gov names
+#   (Status, AgencyClass); removed a duplicate build_mode_instruction.
 
 SYSTEM_PROMPT = """You are a clinical trials data analyst. Your job is to interpret a user's
 natural language question about clinical trials and produce a structured
@@ -232,31 +236,6 @@ Query: "How have sponsor types changed over time for lung cancer?"
 → Step 5: group_by=["start_year", "sponsor_class"], metric=count
 → 1 data requirement, 1 task"""
 
-def build_mode_instruction(input_mode: str) -> str:
-    if input_mode == "supplement":
-        return """
-        The user provided a query AND confirmed filters.
-        Extract intent and entities from the QUERY.
-        Treat confirmed filters as ground truth for their fields.
-        If query conflicts with a filter, use the filter and note it.
-        Query may mention ADDITIONAL entities for comparisons — extract normally.
-        If query is vague but filters are specific, infer intent from filters.
-        """
-    elif input_mode == "override":
-        return """
-        Structured params are the ONLY source for data filtering.
-        From the QUERY, extract ONLY analysis intent:
-        - Type of analysis (distribution, trend, comparison, network)
-        - What to group by, what metric
-        - What viz category fits
-        Do NOT extract filterable entities from query text.
-        All search_params and filter_params MUST come from confirmed_filters.
-        """
-    else:  # query_only
-        return """
-        Ignore all confirmed_filters. Extract everything from query.
-        """
-
 
 def build_mode_instruction(input_mode: str) -> str:
     if input_mode == "supplement":
@@ -282,18 +261,28 @@ def build_mode_instruction(input_mode: str) -> str:
         return """
         Ignore all confirmed_filters. Extract everything from query.
         """
+
 
 def build_query_analyzer_prompt(
-    valid_enums, groupable_fields, tool_schemas,
-    input_mode, confirmed_filters
+    valid_enums, groupable_fields, tool_schemas, input_mode, confirmed_filters
 ) -> str:
-    return SYSTEM_PROMPT.format(
-        valid_phases=valid_enums.get("Phase", []),
-        valid_statuses=valid_enums.get("OverallStatus", []),
-        valid_sponsor_classes=valid_enums.get("LeadSponsorClass", []),
-        groupable_fields=groupable_fields,
-        tool_schemas=json.dumps(tool_schemas, indent=2),
-        mode_instruction=build_mode_instruction(input_mode),
-        confirmed_filters=json.dumps(confirmed_filters) if confirmed_filters else "None",
-        query_intent_schema=json.dumps(QueryIntent.model_json_schema(), indent=2),
-    )
+    """Assemble the Stage 1 system prompt with runtime data.
+
+    Uses str.replace (not str.format): the template's {{...}} placeholders are
+    double-braced and the injected JSON schema contains many literal braces, so
+    format() is unusable here. `tool_schemas` is accepted for signature stability
+    but the tools are described inline in SYSTEM_PROMPT, so it is not injected.
+    """
+    replacements = {
+        "{{valid_phases}}": ", ".join(valid_enums.get("Phase", [])),
+        "{{valid_statuses}}": ", ".join(valid_enums.get("Status", [])),
+        "{{valid_sponsor_classes}}": ", ".join(valid_enums.get("AgencyClass", [])),
+        "{{groupable_fields}}": ", ".join(groupable_fields),
+        "{{mode_instruction}}": build_mode_instruction(input_mode),
+        "{{confirmed_filters}}": json.dumps(confirmed_filters) if confirmed_filters else "None",
+        "{{query_intent_schema}}": json.dumps(QueryIntent.model_json_schema(), indent=2),
+    }
+    prompt = SYSTEM_PROMPT
+    for placeholder, value in replacements.items():
+        prompt = prompt.replace(placeholder, value)
+    return prompt

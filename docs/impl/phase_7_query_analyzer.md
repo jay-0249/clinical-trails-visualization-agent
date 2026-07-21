@@ -31,8 +31,6 @@ def build_mode_instruction(input_mode: str) -> str:
     """Return mode-specific instructions for supplement/override/query_only."""
 ```
 
-See `docs/PROMPTS.md` for the complete prompt template with all sections.
-
 ## Analyzer function
 
 ```python

@@ -4,7 +4,9 @@ Pure fixtures, no API or LLM. Verifies all 3 output modes plus the anti-overfit
 guarantee (a field never used in the examples still works).
 """
 
-from app.pipeline.aggregator import aggregate
+import pytest
+
+from app.pipeline.aggregator import AggregationError, aggregate
 from app.schemas.intent import AggregationSpec
 from app.schemas.trial_record import StudyRecord
 
@@ -246,3 +248,52 @@ def test_4_16_field_not_in_examples():
         "INTERVENTIONAL": 2,
         "OBSERVATIONAL": 1,
     }
+
+
+# --- Layer 2 runtime guards (AggregationError) ----------------------------
+
+
+def test_q4_network_shape_collect_no_metric_field_runs():
+    # The exact Q4 plan: edge_list, metric=collect, no metric_field -> must run.
+    recs = [
+        make_study(nct="a", sponsor_name="Pfizer", interventions=["A", "B"]),
+        make_study(nct="b", sponsor_name="Pfizer", interventions=["A"]),
+    ]
+    out = aggregate(
+        recs,
+        spec(
+            group_by=["sponsor_name", "interventions"],
+            metric="collect",
+            output_mode="edge_list",
+        ),
+    )
+    edges = {(e["source"], e["target"]): e["weight"] for e in out}
+    assert edges == {("Pfizer", "A"): 2, ("Pfizer", "B"): 1}
+
+
+def test_edge_list_wrong_group_by_count_raises():
+    with pytest.raises(AggregationError):
+        aggregate(
+            [make_study()],
+            spec(group_by=["sponsor_name"], output_mode="edge_list"),
+        )
+
+
+def test_raw_records_without_metric_field_raises():
+    with pytest.raises(AggregationError):
+        aggregate(
+            [make_study()],
+            spec(group_by=[], metric="count", output_mode="raw_records"),
+        )
+
+
+def test_aggregated_sum_without_metric_field_raises():
+    with pytest.raises(AggregationError):
+        aggregate([make_study()], spec(metric="sum", output_mode="aggregated"))
+
+
+def test_aggregated_collect_without_metric_field_degrades_to_empty():
+    # 'collect' does not crash without a field — it yields [] per group.
+    recs = [make_study(nct="a", phase_label="P1", conditions=["X"])]
+    out = aggregate(recs, spec(metric="collect", output_mode="aggregated"))
+    assert out[0]["value"] == []

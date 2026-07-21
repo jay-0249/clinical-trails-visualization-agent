@@ -186,3 +186,42 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - [x] List field explosion works — `test_4_3`, `test_4_14`.
 - [x] Empty input returns empty — `test_4_9`.
 - [x] Works with a field NOT in the examples (anti-overfit) — `test_4_16` (`study_type`).
+
+---
+
+## Phase 7 — Query Analyzer (Stage 1 LLM)
+
+**2026-07-21 — OpenAI provider re-confirmed & key verified**
+- Live check: key authenticates (12 models); a 1-token call on `gpt-4o` (→ `gpt-4o-2024-08-06`) and `gpt-4o-mini` both succeed. Both support structured/JSON output. No replacement needed.
+
+**2026-07-21 — OpenAI SDK directly, JSON mode + validate + retry (not LangChain, not strict structured outputs)**
+- **Chose:** `AsyncOpenAI` with `response_format={"type":"json_object"}`, then `QueryIntent.model_validate(json.loads(...))`, retrying once with the error message on failure.
+- **Over:** LangChain (impl suggestion); OpenAI strict structured outputs.
+- **Because:** We standardized on the `openai` SDK — no need for LangChain. Strict json_schema can't represent `DataRequirement.search_params`/`filter_params` (free-form `dict` → `additionalProperties:true`), so JSON mode + Pydantic validation is the robust path and matches the impl's own steps (parse → validate → retry). `original_query` is set to the real query post-validation.
+
+**2026-07-21 — Fixed 3 builder bugs in the pre-populated prompt (SYSTEM_PROMPT text untouched)**
+- `build_query_analyzer_prompt` used `str.format`, but the template uses `{{double-brace}}` placeholders (which `format` treats as literals) and the injected JSON schema is full of braces → switched to targeted `str.replace`.
+- Enum keys were `"OverallStatus"`/`"LeadSponsorClass"` → the live CT.gov enum keys are `"Status"`/`"AgencyClass"` (Phase 4). Left as-was they'd inject empty lists.
+- `build_mode_instruction` was defined twice (identical) → deduped.
+- The user's authored prompt content was preserved verbatim; only the plumbing was corrected. Prompt version bumped to `2026-07-21-b` in a comment.
+
+**2026-07-21 — Two-layer output_mode requirements (fixes the Q4 network false-reject)**
+- **Problem:** the validator required `metric_field` for `metric=collect` unconditionally, rejecting a *correct* `edge_list` network plan — but the aggregator's `_edge_list` ignores `metric`/`metric_field` entirely.
+- **Layer 1 (validator):** `_OUTPUT_MODE_REQUIREMENTS` encodes what each mode truly needs — `aggregated` needs a field only for `sum`/`unique_count`; `raw_records` always needs the value field; `edge_list` needs exactly 2 group_by fields and no metric.
+- **Layer 2 (aggregator):** each mode function starts with a runtime guard raising `AggregationError` if it genuinely can't run (edge_list ≠ 2 fields, raw_records w/o field, aggregated sum/unique_count w/o field); an ignored `metric_field` on edge_list is logged at DEBUG and skipped.
+- **Result:** hallucinated intents fail loudly at one of the two layers; valid plans (Q4) pass. `collect` without a field degrades to `[]` (not a crash), so it isn't required.
+
+**2026-07-21 — Q3 (vague override query) note**
+- "show me" + `drug_name` in override mode: override works (the retrieval filter is sourced from the param, not query text). The contentless query led the LLM to a degenerate `raw_records`-by-`nct_id` plan with no value field, which Layer 1 correctly rejects — the guardrail working as intended, not a bug. The demonstration test asserts the override sourcing, not plan validity.
+
+**Manual verification (live, gpt-4o):**
+- Q1 "distribution across phases" → simple, 1 req, categorical `group_by=[phase_label]` — valid.
+- Q2 "Pembro vs Nivolumab" → **comparative, 2 reqs entity-tagged**, `group_by=[phase_label, entity_tag]` — valid.
+- Q3 override → plan sourced from `drug_name` param (override works).
+- Q4 "network of sponsors and drugs" → relational `edge_list`, `group_by=[sponsor_name, interventions]` — valid (post-fix).
+
+**Checkpoint (from PLANNING.md):**
+- [x] Simple query produces valid QueryIntent — Q1.
+- [x] Comparison query produces 2 data requirements with entity_tags — Q2.
+- [x] Override mode changes behavior — Q3.
+- [x] LLM call logged with model, tokens, duration — `llm_call` event (model `gpt-4o-2024-08-06`, prompt/completion tokens, duration_ms).

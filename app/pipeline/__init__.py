@@ -1,5 +1,5 @@
 """Pipeline stages: query analysis, retrieval, aggregation, viz generation."""
 
-from app.pipeline.aggregator import aggregate
+from app.pipeline.aggregator import AggregationError, aggregate
 
-__all__ = ["aggregate"]
+__all__ = ["AggregationError", "aggregate"]

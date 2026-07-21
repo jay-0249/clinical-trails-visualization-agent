@@ -1,12 +1,16 @@
-"""Validation gates that keep the LLM honest.
+"""Validation gates that keep the LLM honest (Layer 1 of 2).
 
 - validate_structured_hints runs BEFORE Stage 1: rejects bad enum values in the
   request so we fail fast (and cheap) without an LLM call.
 - validate_intent runs AFTER Stage 1, BEFORE Stage 2: rejects a QueryIntent that
-  references non-existent fields, invalid enum values, or inconsistent
-  output modes — catching hallucinations before they reach the API or pandas.
+  references non-existent fields, invalid enum values, or an output_mode whose
+  real requirements aren't met.
 
-All valid values are read from the reference cache, never hardcoded.
+Requirements are driven by `_OUTPUT_MODE_REQUIREMENTS`, which mirrors what the
+aggregator ACTUALLY needs per mode (see app/pipeline/aggregator.py, Layer 2) —
+so we never reject a plan the aggregator would happily run (e.g. an edge_list
+network that carries an unused metric). All valid values come from the
+reference cache, never hardcoded.
 """
 
 from fastapi import HTTPException
@@ -32,7 +36,19 @@ _FILTER_ENUM_ATTR = {
 
 MAX_TASKS = 4
 MAX_DATA_REQUIREMENTS = 5
-_METRICS_NEEDING_FIELD = {"sum", "collect", "unique_count"}
+
+# What each output_mode actually requires. Mirrors the aggregator's behavior:
+# - aggregated: sum/unique_count do field math (crash without a field); >=1 group_by.
+# - raw_records: metric_field is the value axis (crash without it); group_by optional.
+# - edge_list: uses only the 2 group_by fields; metric/metric_field are ignored.
+_OUTPUT_MODE_REQUIREMENTS = {
+    "aggregated": {"needs_metric_field_for": ["sum", "unique_count"], "min_group_by": 1},
+    "raw_records": {"needs_metric_field_always": True, "min_group_by": 0},
+    "edge_list": {"needs_metric_field_for": [], "exact_group_by": 2},
+}
+
+# Which candidate category each non-default output_mode must be paired with.
+_MODE_REQUIRES_CATEGORY = {"raw_records": "distribution", "edge_list": "relational"}
 
 
 class IntentValidationError(ValueError):
@@ -90,7 +106,22 @@ def validate_intent(intent: QueryIntent, cache) -> None:
     groupable = set(cache.groupable_fields)
     for task in intent.tasks:
         agg = task.aggregation
+        mode = agg.output_mode
+        reqs = _OUTPUT_MODE_REQUIREMENTS.get(mode, {})
 
+        # group_by cardinality
+        if "exact_group_by" in reqs and len(agg.group_by) != reqs["exact_group_by"]:
+            raise IntentValidationError(
+                f"output_mode '{mode}' requires exactly {reqs['exact_group_by']} "
+                f"group_by fields, got {len(agg.group_by)}."
+            )
+        if len(agg.group_by) < reqs.get("min_group_by", 0):
+            raise IntentValidationError(
+                f"output_mode '{mode}' requires at least {reqs['min_group_by']} "
+                f"group_by field(s), got {len(agg.group_by)}."
+            )
+
+        # group_by fields must exist on StudyRecord
         for field in agg.group_by:
             if field not in groupable:
                 raise IntentValidationError(
@@ -98,34 +129,34 @@ def validate_intent(intent: QueryIntent, cache) -> None:
                     f"Valid fields: {sorted(groupable)}"
                 )
 
-        if agg.metric in _METRICS_NEEDING_FIELD:
-            if not agg.metric_field or agg.metric_field not in groupable:
-                raise IntentValidationError(
-                    f"metric '{agg.metric}' requires a valid metric_field "
-                    f"(a StudyRecord field); got {agg.metric_field!r}. "
-                    f"Valid fields: {sorted(groupable)}"
-                )
+        # metric_field requirements (only where the aggregator actually reads it)
+        if reqs.get("needs_metric_field_always") and not agg.metric_field:
+            raise IntentValidationError(
+                f"output_mode '{mode}' requires a metric_field (the value field). "
+                f"Valid fields: {sorted(groupable)}"
+            )
+        if agg.metric in reqs.get("needs_metric_field_for", []) and not agg.metric_field:
+            raise IntentValidationError(
+                f"metric '{agg.metric}' requires a metric_field in '{mode}' mode. "
+                f"Valid fields: {sorted(groupable)}"
+            )
+        if agg.metric_field and agg.metric_field not in groupable:
+            raise IntentValidationError(
+                f"metric_field '{agg.metric_field}' is not a StudyRecord field. "
+                f"Valid fields: {sorted(groupable)}"
+            )
 
+        # candidate categories valid (normally Literal-enforced; defensive)
         for cat in task.candidate_viz_categories:
             if cat not in VALID_CATEGORIES:
                 raise IntentValidationError(
                     f"Invalid viz category '{cat}'. Valid: {sorted(VALID_CATEGORIES)}"
                 )
 
-        cats = set(task.candidate_viz_categories)
-        if agg.output_mode == "raw_records" and "distribution" not in cats:
+        # output_mode <-> category consistency
+        required_cat = _MODE_REQUIRES_CATEGORY.get(mode)
+        if required_cat and required_cat not in set(task.candidate_viz_categories):
             raise IntentValidationError(
-                "output_mode 'raw_records' requires 'distribution' in "
+                f"output_mode '{mode}' requires '{required_cat}' in "
                 "candidate_viz_categories."
             )
-        if agg.output_mode == "edge_list":
-            if "relational" not in cats:
-                raise IntentValidationError(
-                    "output_mode 'edge_list' requires 'relational' in "
-                    "candidate_viz_categories."
-                )
-            if len(agg.group_by) != 2:
-                raise IntentValidationError(
-                    "output_mode 'edge_list' requires exactly 2 group_by fields, "
-                    f"got {len(agg.group_by)}."
-                )

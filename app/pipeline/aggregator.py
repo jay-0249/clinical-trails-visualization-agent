@@ -1,4 +1,4 @@
-"""Stage 3 — deterministic aggregation.
+"""Stage 3 — deterministic aggregation (Layer 2 of 2).
 
 ONE generic function, three output modes. It must never branch on a specific
 field name: whatever fields the AggregationSpec names, it groups/pivots by
@@ -8,16 +8,27 @@ changes (the anti-overfit guarantee).
 - aggregated  -> group-by + metric        (categorical/temporal/spatial/matrix/hierarchical)
 - raw_records -> pass-through value list   (distribution)
 - edge_list   -> co-occurrence pairs       (relational)
+
+Each mode function begins with a runtime guard: if it genuinely cannot proceed
+(would crash on a hallucinated intent) it raises AggregationError with a clear
+message; fields a mode doesn't use are logged at DEBUG and ignored. This backs
+up the Stage-1 validator (Layer 1) so a bad intent fails loudly, not silently.
 """
 
-import math
+import logging
 
 import pandas as pd
 
 from app.schemas.intent import AggregationSpec
 from app.schemas.trial_record import StudyRecord
+from app.utils.logger import get_logger, log_event
 
 _SORT_MODES = {"value_desc", "value_asc", "key_desc", "key_asc"}
+_logger = get_logger("aggregator")
+
+
+class AggregationError(RuntimeError):
+    """The aggregator received an intent it cannot execute."""
 
 
 def aggregate(
@@ -109,7 +120,7 @@ def _sort_rows(rows: list[dict], spec: AggregationSpec) -> list[dict]:
     return rows
 
 
-# --- modes ----------------------------------------------------------------
+# --- modes (each starts with a runtime guard) -----------------------------
 
 
 def _aggregated(
@@ -119,7 +130,12 @@ def _aggregated(
     max_citations: int,
 ) -> list[dict]:
     if not spec.group_by:
-        return []
+        return []  # nothing to group by
+    if spec.metric in ("sum", "unique_count") and not spec.metric_field:
+        raise AggregationError(
+            f"metric '{spec.metric}' requires metric_field in aggregated mode"
+        )
+
     df = pd.DataFrame([r.model_dump() for r in records])
 
     # Explode any list-valued group_by column (e.g. countries, interventions).
@@ -148,10 +164,12 @@ def _aggregated(
 
 
 def _raw_records(records: list[StudyRecord], spec: AggregationSpec) -> list[dict]:
+    if not spec.metric_field:
+        raise AggregationError("raw_records requires metric_field (the value field)")
     field = spec.metric_field
     out: list[dict] = []
     for r in records:
-        val = getattr(r, field, None) if field else None
+        val = getattr(r, field, None)
         if val is None:
             continue
         row = {"value": val, "nct_id": r.nct_id}
@@ -164,6 +182,16 @@ def _raw_records(records: list[StudyRecord], spec: AggregationSpec) -> list[dict
 def _edge_list(
     records: list[StudyRecord], spec: AggregationSpec, include_citations: bool
 ) -> list[dict]:
+    if len(spec.group_by) != 2:
+        raise AggregationError("edge_list requires exactly 2 group_by fields")
+    if spec.metric_field:
+        log_event(
+            _logger,
+            logging.DEBUG,
+            "edge_list_metric_field_ignored",
+            metric_field=spec.metric_field,
+        )
+
     src_field, tgt_field = spec.group_by[0], spec.group_by[1]
     weights: dict[tuple, int] = {}
     cites: dict[tuple, list] = {}

@@ -157,18 +157,69 @@ def test_3_6b_edge_list_two_fields_ok():
 
 def test_3_7_raw_records_without_distribution():
     it = intent(
-        tasks=[task(categories=["categorical"], aggregation=agg(output_mode="raw_records"))]
+        tasks=[
+            task(
+                categories=["categorical"],
+                aggregation=agg(output_mode="raw_records", metric_field="enrollment"),
+            )
+        ]
     )
     with pytest.raises(IntentValidationError) as exc:
         validate_intent(it, mock_cache())
-    assert "raw_records" in str(exc.value)
+    assert "distribution" in str(exc.value)
 
 
 def test_3_7b_raw_records_with_distribution_ok():
     it = intent(
-        tasks=[task(categories=["distribution"], aggregation=agg(output_mode="raw_records"))]
+        tasks=[
+            task(
+                categories=["distribution"],
+                aggregation=agg(output_mode="raw_records", metric_field="enrollment"),
+            )
+        ]
     )
     validate_intent(it, mock_cache())  # no raise
+
+
+# --- two-layer regression: edge_list ignores metric/metric_field ----------
+
+
+def test_q4_edge_list_collect_no_metric_field_passes():
+    # The Q4 network plan the LLM produced: edge_list + metric=collect + no
+    # metric_field. The aggregator ignores the metric here, so validation passes.
+    it = intent(
+        tasks=[
+            task(
+                categories=["relational"],
+                aggregation=agg(
+                    group_by=["sponsor_name", "interventions"],
+                    metric="collect",
+                    output_mode="edge_list",
+                ),
+            )
+        ]
+    )
+    validate_intent(it, mock_cache())  # no raise
+
+
+def test_aggregated_collect_without_metric_field_passes():
+    # 'collect' is NOT in aggregated.needs_metric_field_for (it degrades to []).
+    it = intent(tasks=[task(aggregation=agg(metric="collect", output_mode="aggregated"))])
+    validate_intent(it, mock_cache())  # no raise
+
+
+def test_raw_records_requires_metric_field():
+    it = intent(
+        tasks=[
+            task(
+                categories=["distribution"],
+                aggregation=agg(group_by=[], output_mode="raw_records", metric_field=None),
+            )
+        ]
+    )
+    with pytest.raises(IntentValidationError) as exc:
+        validate_intent(it, mock_cache())
+    assert "metric_field" in str(exc.value)
 
 
 # --- 3.8 invalid trial_phase in request (before LLM) ----------------------
