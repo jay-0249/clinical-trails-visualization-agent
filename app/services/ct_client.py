@@ -38,6 +38,27 @@ class TruncationInfo:
     reason: str
 
 
+def _translate_phase_filter(params: dict) -> dict:
+    """CT.gov v2 has no `filter.phase` param — express phase via `filter.advanced`.
+
+    `filter.phase=PHASE3`          -> `filter.advanced=AREA[Phase]PHASE3`
+    `filter.phase=PHASE1|PHASE2`   -> `filter.advanced=AREA[Phase](PHASE1 OR PHASE2)`
+
+    `filter.phase` stays our internal key (validated against live enums); only
+    this HTTP-boundary translation knows the actual API syntax.
+    """
+    phase = params.get("filter.phase")
+    if not phase:
+        return params
+    out = {k: v for k, v in params.items() if k != "filter.phase"}
+    tokens = [t.strip() for t in str(phase).split("|") if t.strip()]
+    if len(tokens) == 1:
+        out["filter.advanced"] = f"AREA[Phase]{tokens[0]}"
+    elif tokens:
+        out["filter.advanced"] = "AREA[Phase](" + " OR ".join(tokens) + ")"
+    return out
+
+
 # --- normalization (pure, sync, never raises) -----------------------------
 
 
@@ -196,7 +217,7 @@ class CTGovClient:
     async def search_studies(
         self, req: DataRequirement, max_records: int
     ) -> tuple[list[StudyRecord], TruncationInfo | None]:
-        params = {**(req.search_params or {}), **(req.filter_params or {})}
+        params = _translate_phase_filter({**(req.search_params or {}), **(req.filter_params or {})})
         params["pageSize"] = self.page_size
         params["countTotal"] = "true"
         params["fields"] = FIELDS

@@ -296,3 +296,19 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - [x] POST returns valid response — `test_8_*`.
 - [x] All e2e tests pass — 12 integration tests (8.x metadata, 9.x logging, 10.x viz contract).
 - [x] 5 example JSONs in `examples/`.
+
+---
+
+## Phase 11 — Anti-Overfit Gate
+
+**2026-07-21 — The gate caught a real generality bug (and validated the approach)**
+- Ran 10 queries not in the examples (6.1-6.10, all 7 viz categories, unseen drugs/conditions/fields) + error cases (7.1-7.3). 2 failed — **not** from overfitting, but a wrong API param: `filter.phase` returned 400.
+- **Fix (the right kind):** `filter.phase` is not a valid CT.gov v2 param — verified live (`filter.phase=PHASE3` → 400; `filter.advanced=AREA[Phase]PHASE3` → 200 with real Phase-3 data; multi-phase `AREA[Phase](PHASE1 OR PHASE2)` filters correctly). Added `ct_client._translate_phase_filter` to convert `filter.phase` → `filter.advanced` at the HTTP boundary. `filter.phase` stays the internal semantic key (validated against live enums); this is a generic adapter correction, **not** a per-query special-case — exactly what the gate is meant to force. `filter.overallStatus` was verified to work as-is.
+- Corrected `docs/API_REFERENCE.md` (the Notion source wrongly listed `filter.phase` as a param).
+
+**Result:** all 13 anti-overfit tests pass. No query required a per-query code branch; the one fix was a shared API-adapter translation that benefits every phase-filtered query.
+
+**Checkpoint (from PLANNING.md):**
+- [x] 10 non-example queries produce valid responses — `test_anti_overfit_query_produces_viz` (6.1-6.8, 6.10) + `test_6_9_vague_override_is_handled`.
+- [x] No overfitting — the only code change was a generic `filter.phase`→`filter.advanced` API translation, not query-specific logic.
+- [x] Error handling — `test_7_1`/`7_2`/`7_3` (zero results, short query 422, invalid enum 400).

@@ -31,8 +31,13 @@
 ## Filter Parameters (enum-based, strict)
 
 - `filter.overallStatus` — pipe-delimited: `RECRUITING|COMPLETED|...`
-- `filter.phase` — `PHASE1|PHASE2|PHASE3|PHASE4|EARLY_PHASE1|NA`
 - `filter.geo` — `distance(lat,lon,dist)`
+- **Phase has no `filter.phase` param** (a request with it returns 400). Filter
+  phase via the advanced/Essie expression instead:
+  `filter.advanced=AREA[Phase]PHASE3` (single) or
+  `filter.advanced=AREA[Phase](PHASE1 OR PHASE2)` (multiple). Internally we keep
+  `filter.phase` as the semantic key and `ct_client._translate_phase_filter`
+  converts it at the HTTP boundary.
 
 ## Pagination
 

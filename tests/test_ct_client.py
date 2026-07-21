@@ -5,7 +5,26 @@ import pytest
 from app.config import Settings
 from app.schemas.intent import DataRequirement
 from app.schemas.trial_record import StudyRecord
-from app.services.ct_client import CTGovClient, normalize_study, phase_label
+from app.services.ct_client import (
+    CTGovClient,
+    _translate_phase_filter,
+    normalize_study,
+    phase_label,
+)
+
+
+def test_translate_phase_filter():
+    assert _translate_phase_filter({"query.cond": "cancer", "filter.phase": "PHASE3"}) == {
+        "query.cond": "cancer",
+        "filter.advanced": "AREA[Phase]PHASE3",
+    }
+    assert _translate_phase_filter({"filter.phase": "PHASE1|PHASE2"}) == {
+        "filter.advanced": "AREA[Phase](PHASE1 OR PHASE2)"
+    }
+    assert _translate_phase_filter({"query.intr": "X"}) == {"query.intr": "X"}  # no-op
+    assert _translate_phase_filter({"filter.overallStatus": "RECRUITING"}) == {
+        "filter.overallStatus": "RECRUITING"  # status untouched
+    }
 
 
 # --- fixture builders -----------------------------------------------------
