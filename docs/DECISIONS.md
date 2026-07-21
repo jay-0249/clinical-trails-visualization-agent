@@ -321,3 +321,12 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - `Makefile`: `make test` (hermetic), `make test-integration` (live), `make lint` (ruff), `make run` (uvicorn). `ruff` added as a dev tool; `ruff check app tests` passes clean with defaults (no custom config needed).
 - Reviewed `docs/DECISIONS.md`: all phases 0–11 logged. README left as-is (final version supplied by the user).
 - `make test` → 100 hermetic tests pass.
+
+---
+
+## Deployment — Docker
+
+**2026-07-21 — Container**
+- `Dockerfile` (python:3.12-slim): install requirements, copy `app/`, run `uvicorn` bound to `$PORT` (Railway convention; defaults to 8000). `.env` is not baked in — `OPENAI_API_KEY` and overrides come from the environment (Railway injects them). `.dockerignore` keeps tests/docs/examples/`.env` out of the image. (No `deploy_docker_railway.md` guide was present; used standard FastAPI/Railway conventions.)
+- **Local smoke test passed:** build → run → `/health` (`cache_loaded: true`; the reference cache loads in-container in ~4s) → live query (`bar_chart/categorical`, 30 studies).
+- **Bug caught by the container test:** `.env` used inline (`# ...`) comments, which `docker run --env-file` keeps as part of the value (pydantic then failed to parse the int/float settings). Moved all comments in `.env` / `.env.example` to their own lines — supported by both pydantic's dotenv parser and Docker's `--env-file`.
