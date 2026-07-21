@@ -1,0 +1,311 @@
+{
+  "visualizations": [
+    {
+      "task_id": "task1",
+      "description": "Use a spatial choropleth because the data is aggregated by country with a single numeric metric (recruiting trial count), making a map the most direct way to identify which countries have the most recruiting trials for diabetes.",
+      "type": "choropleth_map",
+      "type_category": "spatial",
+      "title": "Countries with the Most Recruiting Diabetes Trials",
+      "encoding": {
+        "location": {
+          "field": "countries"
+        },
+        "value": {
+          "field": "value"
+        }
+      },
+      "data": [
+        {
+          "countries": "United States",
+          "value": 82
+        },
+        {
+          "countries": "China",
+          "value": 25
+        },
+        {
+          "countries": "Canada",
+          "value": 11
+        },
+        {
+          "countries": "Germany",
+          "value": 11
+        },
+        {
+          "countries": "France",
+          "value": 9
+        },
+        {
+          "countries": "South Korea",
+          "value": 9
+        },
+        {
+          "countries": "Sweden",
+          "value": 8
+        },
+        {
+          "countries": "United Kingdom",
+          "value": 8
+        },
+        {
+          "countries": "Italy",
+          "value": 7
+        },
+        {
+          "countries": "Spain",
+          "value": 7
+        },
+        {
+          "countries": "Taiwan",
+          "value": 7
+        },
+        {
+          "countries": "Australia",
+          "value": 5
+        },
+        {
+          "countries": "Denmark",
+          "value": 5
+        },
+        {
+          "countries": "Mexico",
+          "value": 5
+        },
+        {
+          "countries": "Belgium",
+          "value": 4
+        },
+        {
+          "countries": "Brazil",
+          "value": 4
+        },
+        {
+          "countries": "Japan",
+          "value": 4
+        },
+        {
+          "countries": "Malaysia",
+          "value": 4
+        },
+        {
+          "countries": "Poland",
+          "value": 4
+        },
+        {
+          "countries": "Puerto Rico",
+          "value": 4
+        },
+        {
+          "countries": "Finland",
+          "value": 3
+        },
+        {
+          "countries": "Hong Kong",
+          "value": 3
+        },
+        {
+          "countries": "India",
+          "value": 3
+        },
+        {
+          "countries": "Netherlands",
+          "value": 3
+        },
+        {
+          "countries": "Pakistan",
+          "value": 3
+        },
+        {
+          "countries": "Slovakia",
+          "value": 3
+        },
+        {
+          "countries": "Switzerland",
+          "value": 3
+        },
+        {
+          "countries": "Thailand",
+          "value": 3
+        },
+        {
+          "countries": "Vietnam",
+          "value": 3
+        },
+        {
+          "countries": "Argentina",
+          "value": 2
+        },
+        {
+          "countries": "Austria",
+          "value": 2
+        },
+        {
+          "countries": "Czechia",
+          "value": 2
+        },
+        {
+          "countries": "Egypt",
+          "value": 2
+        },
+        {
+          "countries": "Ireland",
+          "value": 2
+        },
+        {
+          "countries": "Nepal",
+          "value": 2
+        },
+        {
+          "countries": "Portugal",
+          "value": 2
+        },
+        {
+          "countries": "Russia",
+          "value": 2
+        },
+        {
+          "countries": "Saudi Arabia",
+          "value": 2
+        },
+        {
+          "countries": "Singapore",
+          "value": 2
+        },
+        {
+          "countries": "Turkey (T\u00fcrkiye)",
+          "value": 2
+        },
+        {
+          "countries": "United Arab Emirates",
+          "value": 2
+        },
+        {
+          "countries": "Bulgaria",
+          "value": 1
+        },
+        {
+          "countries": "Croatia",
+          "value": 1
+        },
+        {
+          "countries": "Greece",
+          "value": 1
+        },
+        {
+          "countries": "Hungary",
+          "value": 1
+        },
+        {
+          "countries": "Indonesia",
+          "value": 1
+        },
+        {
+          "countries": "Iran",
+          "value": 1
+        },
+        {
+          "countries": "Iraq",
+          "value": 1
+        },
+        {
+          "countries": "Israel",
+          "value": 1
+        },
+        {
+          "countries": "Kazakhstan",
+          "value": 1
+        },
+        {
+          "countries": "Kuwait",
+          "value": 1
+        },
+        {
+          "countries": "Martinique",
+          "value": 1
+        },
+        {
+          "countries": "Norway",
+          "value": 1
+        },
+        {
+          "countries": "Romania",
+          "value": 1
+        },
+        {
+          "countries": "Ukraine",
+          "value": 1
+        }
+      ],
+      "rendering_hints": {
+        "color_scheme": "sequential_blue",
+        "scale_type": "linear",
+        "sort_order": "descending",
+        "show_legend": true,
+        "tooltip": {
+          "fields": [
+            "countries",
+            "value"
+          ],
+          "value_format": "integer"
+        }
+      },
+      "citations": null
+    }
+  ],
+  "meta": {
+    "request_id": "f4ab793b-5905-4a66-9427-b62c2dfc774b",
+    "original_query": "Which countries have the most recruiting trials for diabetes?",
+    "input_mode": "supplement",
+    "input_interpretation": {
+      "input_mode": "supplement",
+      "from_query": {
+        "req1": {
+          "query.cond": "diabetes",
+          "filter.overallStatus": "RECRUITING"
+        }
+      },
+      "from_params": {},
+      "conflicts": [],
+      "resolution": "Query is primary; structured params confirm/add (supplement).",
+      "ignored_params": {}
+    },
+    "query_complexity": "simple",
+    "filters_applied": {
+      "query.cond": "diabetes",
+      "filter.overallStatus": "RECRUITING"
+    },
+    "total_studies_analyzed": 200,
+    "data_retrieval_strategy": "field_stats",
+    "api_calls": [
+      {
+        "endpoint": "/studies",
+        "params": {
+          "query.cond": "diabetes",
+          "filter.overallStatus": "RECRUITING",
+          "pageSize": 200,
+          "countTotal": "true"
+        },
+        "timestamp": "2026-07-21T22:00:17.755542+00:00",
+        "record_count": 200,
+        "http_status": 200,
+        "duration_ms": 360
+      }
+    ],
+    "stage_timings": {
+      "query_analysis": 3664.6,
+      "data_retrieval": 383.4,
+      "aggregation_task1": 20.7,
+      "viz_generation_task1": 9517.6
+    },
+    "api_version": "2.0.5",
+    "data_refresh": "2026-07-21T09:00:05",
+    "notes": [
+      "Used study_search (capped sample) instead of field_stats (v2)."
+    ],
+    "limitations": [
+      "Requirement req1: analyzed 200 of 1966 matching studies (Reached max_studies cap or page limit)."
+    ],
+    "warnings": [],
+    "source": "clinicaltrials.gov"
+  }
+}

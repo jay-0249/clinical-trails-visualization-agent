@@ -165,6 +165,25 @@ def test_build_error_response_http_exception():
     assert err.details["valid_values"] == ["PHASE3"]
 
 
+# --- data_retriever param whitelist (Bug 1 fix) ---------------------------
+
+
+def test_strip_unsupported_params():
+    from app.pipeline.data_retriever import _strip_unsupported_params
+
+    req = DataRequirement(
+        requirement_id="r1",
+        retrieval_strategy="study_search",
+        search_params={"query.cond": "lung cancer", "start_year": {"gte": 2015}},
+        filter_params={"filter.phase": "PHASE3", "bogus": "x"},
+    )
+    ctx = _ctx()
+    _strip_unsupported_params(req, ctx)
+    assert req.search_params == {"query.cond": "lung cancer"}  # start_year stripped
+    assert req.filter_params == {"filter.phase": "PHASE3"}  # bogus stripped
+    assert any("start_year" in n and "bogus" in n for n in ctx.notes)
+
+
 # --- execute error path (hermetic — fails at pre-validation, no network) ---
 
 

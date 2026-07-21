@@ -1,0 +1,2221 @@
+{
+  "visualizations": [
+    {
+      "task_id": "task1",
+      "description": "A force-directed network graph is chosen because the dataset is naturally relational (sponsor-to-drug edges with an associated weight), making a network view more informative than a bar chart for showing how sponsors connect to multiple drugs.",
+      "type": "force_directed_network",
+      "type_category": "relational",
+      "title": "Network of Sponsors and Drugs in Breast Cancer Trials",
+      "encoding": {
+        "source": {
+          "field": "source"
+        },
+        "target": {
+          "field": "target"
+        },
+        "weight": {
+          "field": "weight"
+        }
+      },
+      "data": [
+        {
+          "source": "George Washington University",
+          "target": "Neoadjuvant endocrine therapy",
+          "weight": 3
+        },
+        {
+          "source": "Sun Yat-sen University",
+          "target": "Bortezomib (B)",
+          "weight": 3
+        },
+        {
+          "source": "Biostar Pharma, Inc.",
+          "target": "Utidelone in combination with capecitabine",
+          "weight": 3
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "TKI258",
+          "weight": 2
+        },
+        {
+          "source": "Sanofi",
+          "target": "gemcitabine/carboplatin",
+          "weight": 2
+        },
+        {
+          "source": "Feixue Song",
+          "target": "Antiemetic Therapy",
+          "weight": 2
+        },
+        {
+          "source": "Sun Yat-sen University",
+          "target": "Cisplatin (CDDP)",
+          "weight": 2
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "paclitaxel",
+          "weight": 2
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Atezolizumab",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Cryosurgery",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Nab-paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+          "target": "malignant fungating wounds care regimen",
+          "weight": 1
+        },
+        {
+          "source": "Pontificia Universidad Catolica de Chile",
+          "target": "Resistance Training",
+          "weight": 1
+        },
+        {
+          "source": "University of Aarhus",
+          "target": "Information about hypothetical mammography screening without benefits",
+          "weight": 1
+        },
+        {
+          "source": "Hospital St. Joseph, Marseille, France",
+          "target": "Preparation in Self-Hypnosis by anchoring",
+          "weight": 1
+        },
+        {
+          "source": "Hospital St. Joseph, Marseille, France",
+          "target": "Conversational Hypnosis",
+          "weight": 1
+        },
+        {
+          "source": "Hospital St. Joseph, Marseille, France",
+          "target": "Preparation in Self-Hypnosis by anchoring + Conversational Hypnosis",
+          "weight": 1
+        },
+        {
+          "source": "Hellenic Oncology Research Group",
+          "target": "Bevacizumab",
+          "weight": 1
+        },
+        {
+          "source": "Hellenic Oncology Research Group",
+          "target": "Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Gynecologic Oncology Group",
+          "target": "DNA analysis",
+          "weight": 1
+        },
+        {
+          "source": "Gynecologic Oncology Group",
+          "target": "mutation analysis",
+          "weight": 1
+        },
+        {
+          "source": "Gynecologic Oncology Group",
+          "target": "polymorphism analysis",
+          "weight": 1
+        },
+        {
+          "source": "Gynecologic Oncology Group",
+          "target": "laboratory biomarker analysis",
+          "weight": 1
+        },
+        {
+          "source": "Gynecologic Oncology Group",
+          "target": "evaluation of cancer risk factors",
+          "weight": 1
+        },
+        {
+          "source": "Fudan University",
+          "target": "cryo-ablation",
+          "weight": 1
+        },
+        {
+          "source": "CairnSurgical, Inc.",
+          "target": "Breast Cancer Locator (BCL) guided partial mastectomy",
+          "weight": 1
+        },
+        {
+          "source": "CairnSurgical, Inc.",
+          "target": "Wire Localized (WL) partial mastectomy",
+          "weight": 1
+        },
+        {
+          "source": "OHSU Knight Cancer Institute",
+          "target": "Electronic Health Record Review",
+          "weight": 1
+        },
+        {
+          "source": "OHSU Knight Cancer Institute",
+          "target": "Interview",
+          "weight": 1
+        },
+        {
+          "source": "OHSU Knight Cancer Institute",
+          "target": "Media Intervention",
+          "weight": 1
+        },
+        {
+          "source": "OHSU Knight Cancer Institute",
+          "target": "Survey Administration",
+          "weight": 1
+        },
+        {
+          "source": "OHSU Knight Cancer Institute",
+          "target": "Training and Education",
+          "weight": 1
+        },
+        {
+          "source": "Peregrine Pharmaceuticals",
+          "target": "Bavituximab",
+          "weight": 1
+        },
+        {
+          "source": "Peregrine Pharmaceuticals",
+          "target": "Taxane",
+          "weight": 1
+        },
+        {
+          "source": "Second Affiliated Hospital, School of Medicine, Zhejiang University",
+          "target": "Endocrine therapy",
+          "weight": 1
+        },
+        {
+          "source": "Sanofi",
+          "target": "Iniparib",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "Ribociclib",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "Letrozole",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "Goserelin",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "Leuprolide",
+          "weight": 1
+        },
+        {
+          "source": "Jonsson Comprehensive Cancer Center",
+          "target": "Diffusion Weighted Imaging",
+          "weight": 1
+        },
+        {
+          "source": "Jonsson Comprehensive Cancer Center",
+          "target": "Magnetic Resonance Spectroscopic Imaging",
+          "weight": 1
+        },
+        {
+          "source": "Uppsala University",
+          "target": "Delayed SLND",
+          "weight": 1
+        },
+        {
+          "source": "Uppsala University",
+          "target": "Late SLND",
+          "weight": 1
+        },
+        {
+          "source": "UNC Lineberger Comprehensive Cancer Center",
+          "target": "Accelerated Partial Breast Irradiation (APBI)",
+          "weight": 1
+        },
+        {
+          "source": "UNC Lineberger Comprehensive Cancer Center",
+          "target": "tamoxifen, anastrozole, exemestane, letrozole, fulvestrant, toremifene",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "RLY-2608",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "Fulvestrant",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "Palbociclib 125mg",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "Ribociclib 400mg",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "Ribociclib 600mg",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "PF-07220060 100mg",
+          "weight": 1
+        },
+        {
+          "source": "Relay Therapeutics, Inc.",
+          "target": "PF-07220060 300 mg",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Diagnostic Mammography",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Resection",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Ultrasound Imaging",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Twinkling Marker Placement",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Digital Breast Tomosynthesis (DBT)",
+          "weight": 1
+        },
+        {
+          "source": "Mayo Clinic",
+          "target": "Scintimammography",
+          "weight": 1
+        },
+        {
+          "source": "Allegheny Singer Research Institute (also known as Allegheny Health Network Research Institute)",
+          "target": "Conditioning Resistance Training",
+          "weight": 1
+        },
+        {
+          "source": "Allegheny Singer Research Institute (also known as Allegheny Health Network Research Institute)",
+          "target": "Strength Resistance Training",
+          "weight": 1
+        },
+        {
+          "source": "Allegheny Singer Research Institute (also known as Allegheny Health Network Research Institute)",
+          "target": "Hypertrophy Resistance Training",
+          "weight": 1
+        },
+        {
+          "source": "Rush University Medical Center",
+          "target": "Enhanced physical activity monitor which is Fitbit watch with mobile App",
+          "weight": 1
+        },
+        {
+          "source": "Rush University Medical Center",
+          "target": "Bollywood-style group dance",
+          "weight": 1
+        },
+        {
+          "source": "Rush University Medical Center",
+          "target": "PAMDance",
+          "weight": 1
+        },
+        {
+          "source": "Woman's",
+          "target": "Metformin Extended Release Oral Tablet",
+          "weight": 1
+        },
+        {
+          "source": "Shenzhen Majory Biotechnology Co., Ltd.",
+          "target": "MR001 Bispecific Antibody for Injection",
+          "weight": 1
+        },
+        {
+          "source": "Beth Israel Medical Center",
+          "target": "Color-coded materials",
+          "weight": 1
+        },
+        {
+          "source": "Beth Israel Medical Center",
+          "target": "Academic detailing",
+          "weight": 1
+        },
+        {
+          "source": "Beth Israel Medical Center",
+          "target": "Standard support",
+          "weight": 1
+        },
+        {
+          "source": "Beth Israel Medical Center",
+          "target": "No academic detailing",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Trials Ireland",
+          "target": "Docetaxel, Carboplatin and Trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Trials Ireland",
+          "target": "Docetaxel, Carboplatin, Trastuzumab and Lapatinib",
+          "weight": 1
+        },
+        {
+          "source": "University of Minnesota",
+          "target": "No intervention",
+          "weight": 1
+        },
+        {
+          "source": "OnKure, Inc.",
+          "target": "OKI-219",
+          "weight": 1
+        },
+        {
+          "source": "OnKure, Inc.",
+          "target": "Fulvestrant",
+          "weight": 1
+        },
+        {
+          "source": "OnKure, Inc.",
+          "target": "Trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "OnKure, Inc.",
+          "target": "Tucatinib",
+          "weight": 1
+        },
+        {
+          "source": "OnKure, Inc.",
+          "target": "Atirmociclib",
+          "weight": 1
+        },
+        {
+          "source": "OnKure, Inc.",
+          "target": "Ribociclib",
+          "weight": 1
+        },
+        {
+          "source": "Jiangsu HengRui Medicine Co., Ltd.",
+          "target": "Cipatinib",
+          "weight": 1
+        },
+        {
+          "source": "Fatih Sultan Mehmet Training and Research Hospital",
+          "target": "mammography",
+          "weight": 1
+        },
+        {
+          "source": "University Hospital, Ghent",
+          "target": "Questionnaire",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute, Egypt",
+          "target": "Serratus Anterior Plane Block",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute, Egypt",
+          "target": "Erector spinae plane block",
+          "weight": 1
+        },
+        {
+          "source": "NSABP Foundation Inc",
+          "target": "Cyclophosphamide",
+          "weight": 1
+        },
+        {
+          "source": "NSABP Foundation Inc",
+          "target": "Docetaxel",
+          "weight": 1
+        },
+        {
+          "source": "NSABP Foundation Inc",
+          "target": "Doxorubicin",
+          "weight": 1
+        },
+        {
+          "source": "NSABP Foundation Inc",
+          "target": "Tamoxifen",
+          "weight": 1
+        },
+        {
+          "source": "Batterjee Medical College",
+          "target": "proceduder surgery",
+          "weight": 1
+        },
+        {
+          "source": "Batterjee Medical College",
+          "target": "Technique surgery",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "Leucovorin",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "5-Fluorouracil",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "Aldoxorubicin HCl",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "nab-Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "ETBX-011",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "ETBX-051",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "ETBX-061",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "GI-4000",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "GI-6207",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "GI-6301",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "Avelumab",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "ALT-803",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "haNK",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "Cyclophosphamide",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "Doxorubicin HCL",
+          "weight": 1
+        },
+        {
+          "source": "ImmunityBio, Inc.",
+          "target": "paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Dana-Farber Cancer Institute",
+          "target": "Fulvestrant",
+          "weight": 1
+        },
+        {
+          "source": "Dana-Farber Cancer Institute",
+          "target": "Ganetespib",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Research Antwerp",
+          "target": "Preoperative radiotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Research Antwerp",
+          "target": "Postoperative radiotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Research Antwerp",
+          "target": "Immediate breast reconstruction",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Research Antwerp",
+          "target": "Immediate or delayed breast reconstruction",
+          "weight": 1
+        },
+        {
+          "source": "University Hospital, Lille",
+          "target": "Self-administered questionnaires",
+          "weight": 1
+        },
+        {
+          "source": "Sanofi",
+          "target": "larotaxel (XRP9881)",
+          "weight": 1
+        },
+        {
+          "source": "Sanofi",
+          "target": "trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "University of California, San Francisco",
+          "target": "Magnetic Resonance Imaging",
+          "weight": 1
+        },
+        {
+          "source": "University of California, San Francisco",
+          "target": "Questionnaire Administration",
+          "weight": 1
+        },
+        {
+          "source": "CCTU- Cancer Theme",
+          "target": "Intensity modulated radiotherapy (IMRT)",
+          "weight": 1
+        },
+        {
+          "source": "CCTU- Cancer Theme",
+          "target": "Endocrine therapy",
+          "weight": 1
+        },
+        {
+          "source": "CCTU- Cancer Theme",
+          "target": "Breast conserving surgery",
+          "weight": 1
+        },
+        {
+          "source": "Guangzhou Medical University",
+          "target": "Sacituzumab Govitecan",
+          "weight": 1
+        },
+        {
+          "source": "Guangzhou Medical University",
+          "target": "Pemetrexed",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "lapatinib ditosylate",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "Centre Hospitalier Universitaire de la R\u00e9union",
+          "target": "blood sample for BRCA2 mutation detection",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "Denosumab",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "Placebo",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "Quality-of-Life Assessment",
+          "weight": 1
+        },
+        {
+          "source": "ProDa BioTech, LLC",
+          "target": "ProAgio Dose Levels (DL) 1,2,3,4",
+          "weight": 1
+        },
+        {
+          "source": "ProDa BioTech, LLC",
+          "target": "ProAgio Dose Expansion",
+          "weight": 1
+        },
+        {
+          "source": "AbbVie",
+          "target": "veliparib (ABT-888)",
+          "weight": 1
+        },
+        {
+          "source": "Seno Medical Instruments Inc.",
+          "target": "Imagio (IUS+OA)",
+          "weight": 1
+        },
+        {
+          "source": "Seno Medical Instruments Inc.",
+          "target": "Imagio Ultrasound",
+          "weight": 1
+        },
+        {
+          "source": "Seno Medical Instruments Inc.",
+          "target": "Mammography",
+          "weight": 1
+        },
+        {
+          "source": "Medical University of Graz",
+          "target": "Nucleosome positioning",
+          "weight": 1
+        },
+        {
+          "source": "BioNTech SE",
+          "target": "PM8002",
+          "weight": 1
+        },
+        {
+          "source": "BioNTech SE",
+          "target": "nab-paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Assiut University",
+          "target": "group (A)",
+          "weight": 1
+        },
+        {
+          "source": "Assiut University",
+          "target": "group (B)",
+          "weight": 1
+        },
+        {
+          "source": "Assiut University",
+          "target": "group (c)",
+          "weight": 1
+        },
+        {
+          "source": "Peking University",
+          "target": "Goserelin+TAM+AI",
+          "weight": 1
+        },
+        {
+          "source": "Peking University",
+          "target": "Epirubicin+CTX+5-Fu",
+          "weight": 1
+        },
+        {
+          "source": "Charite University, Berlin, Germany",
+          "target": "CTC isolation by HSP70",
+          "weight": 1
+        },
+        {
+          "source": "Terremoto Biosciences Inc.",
+          "target": "TER-2013",
+          "weight": 1
+        },
+        {
+          "source": "Terremoto Biosciences Inc.",
+          "target": "Fulvestrant injection",
+          "weight": 1
+        },
+        {
+          "source": "M.D. Anderson Cancer Center",
+          "target": "Ductal Lavage Fluid Collection",
+          "weight": 1
+        },
+        {
+          "source": "Peking Union Medical College",
+          "target": "Inetetamab",
+          "weight": 1
+        },
+        {
+          "source": "Peking Union Medical College",
+          "target": "Rapamycin",
+          "weight": 1
+        },
+        {
+          "source": "Peking Union Medical College",
+          "target": "Pyrotinib",
+          "weight": 1
+        },
+        {
+          "source": "Peking Union Medical College",
+          "target": "Chemotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Tianjin Medical University Cancer Institute and Hospital",
+          "target": "Apatinib",
+          "weight": 1
+        },
+        {
+          "source": "Tianjin Medical University Cancer Institute and Hospital",
+          "target": "Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Dana-Farber Cancer Institute",
+          "target": "Standard Genetic Counseling",
+          "weight": 1
+        },
+        {
+          "source": "Dana-Farber Cancer Institute",
+          "target": "Educational Video",
+          "weight": 1
+        },
+        {
+          "source": "NYU Langone Health",
+          "target": "Mindfulness Based Cognitive Therapy",
+          "weight": 1
+        },
+        {
+          "source": "NYU Langone Health",
+          "target": "Treatment as Usual",
+          "weight": 1
+        },
+        {
+          "source": "University of Illinois at Chicago",
+          "target": "aldesleukin",
+          "weight": 1
+        },
+        {
+          "source": "University of Illinois at Chicago",
+          "target": "filgrastim",
+          "weight": 1
+        },
+        {
+          "source": "University of Illinois at Chicago",
+          "target": "carboplatin",
+          "weight": 1
+        },
+        {
+          "source": "University of Illinois at Chicago",
+          "target": "cyclophosphamide",
+          "weight": 1
+        },
+        {
+          "source": "University of Illinois at Chicago",
+          "target": "thiotepa",
+          "weight": 1
+        },
+        {
+          "source": "University of Illinois at Chicago",
+          "target": "peripheral blood stem cell transplantation",
+          "weight": 1
+        },
+        {
+          "source": "Feixue Song",
+          "target": "Electroacupuncture",
+          "weight": 1
+        },
+        {
+          "source": "Feixue Song",
+          "target": "Sham electroacupuncture",
+          "weight": 1
+        },
+        {
+          "source": "Zhi Yang",
+          "target": "Anti-HER2 CAR-T",
+          "weight": 1
+        },
+        {
+          "source": "Peking Union Medical College",
+          "target": "Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Herlev and Gentofte Hospital",
+          "target": "Risk stratified arm",
+          "weight": 1
+        },
+        {
+          "source": "Herlev and Gentofte Hospital",
+          "target": "Control arm",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "magnetic resonance imaging",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "radiomammography",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "ultrasound imaging",
+          "weight": 1
+        },
+        {
+          "source": "Neovii Biotech",
+          "target": "ertumaxomab",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "Giredestrant",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "Fulvestrant",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "Abemaciclib",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "Palbociclib",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "Ribociclib",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "LHRH Agonist",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "FoundationOne Liquid CDx Assay (F1LCDx)",
+          "weight": 1
+        },
+        {
+          "source": "Imunon",
+          "target": "cyclophosphamide",
+          "weight": 1
+        },
+        {
+          "source": "Imunon",
+          "target": "doxorubicin hydrochloride",
+          "weight": 1
+        },
+        {
+          "source": "Imunon",
+          "target": "conventional surgery",
+          "weight": 1
+        },
+        {
+          "source": "Imunon",
+          "target": "neoadjuvant therapy",
+          "weight": 1
+        },
+        {
+          "source": "Imunon",
+          "target": "thermal ablation therapy",
+          "weight": 1
+        },
+        {
+          "source": "ImaginAb, Inc.",
+          "target": "\u2078\u2079Zr-Df-IAB22M2C Infusion",
+          "weight": 1
+        },
+        {
+          "source": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+          "target": "Carrellizumab + Capecitabine",
+          "weight": 1
+        },
+        {
+          "source": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+          "target": "Placebo + Capecitabine",
+          "weight": 1
+        },
+        {
+          "source": "Nerviano Medical Sciences",
+          "target": "NMS-03305293",
+          "weight": 1
+        },
+        {
+          "source": "University of California, San Diego",
+          "target": "A CDK4/6 inhibitor different from the first that the participant had received, plus fulvestrant.",
+          "weight": 1
+        },
+        {
+          "source": "University of California, San Diego",
+          "target": "Treatment of physician's choice",
+          "weight": 1
+        },
+        {
+          "source": "Sanofi",
+          "target": "iniparib",
+          "weight": 1
+        },
+        {
+          "source": "Memorial Sloan Kettering Cancer Center",
+          "target": "Clinical Breast exam (CBE)",
+          "weight": 1
+        },
+        {
+          "source": "Memorial Sloan Kettering Cancer Center",
+          "target": "iBreastExam device",
+          "weight": 1
+        },
+        {
+          "source": "Memorial Sloan Kettering Cancer Center",
+          "target": "mammogram",
+          "weight": 1
+        },
+        {
+          "source": "Weill Medical College of Cornell University",
+          "target": "ixabepilone",
+          "weight": 1
+        },
+        {
+          "source": "Shengjing Hospital",
+          "target": "endocrine therapy",
+          "weight": 1
+        },
+        {
+          "source": "Christiana Care Health Services",
+          "target": "moderated support",
+          "weight": 1
+        },
+        {
+          "source": "Christiana Care Health Services",
+          "target": "peer-led",
+          "weight": 1
+        },
+        {
+          "source": "National Taiwan University Hospital",
+          "target": "Afatinib",
+          "weight": 1
+        },
+        {
+          "source": "ArQule, Inc., a subsidiary of Merck Sharp & Dohme LLC, a subsidiary of Merck & Co., Inc. (Rahway, NJ USA)",
+          "target": "ARQ 092 + carboplatin + paclitaxel (Closed)",
+          "weight": 1
+        },
+        {
+          "source": "ArQule, Inc., a subsidiary of Merck Sharp & Dohme LLC, a subsidiary of Merck & Co., Inc. (Rahway, NJ USA)",
+          "target": "ARQ 092 + paclitaxel (Closed)",
+          "weight": 1
+        },
+        {
+          "source": "ArQule, Inc., a subsidiary of Merck Sharp & Dohme LLC, a subsidiary of Merck & Co., Inc. (Rahway, NJ USA)",
+          "target": "ARQ 092 + anastrozole",
+          "weight": 1
+        },
+        {
+          "source": "Brigham and Women's Hospital",
+          "target": "Initiation of palbociclib plus letrozole",
+          "weight": 1
+        },
+        {
+          "source": "Brigham and Women's Hospital",
+          "target": "Initiation of letrozole",
+          "weight": 1
+        },
+        {
+          "source": "Leiden University Medical Center",
+          "target": "Fasting Mimicking diet program",
+          "weight": 1
+        },
+        {
+          "source": "European Institute of Oncology",
+          "target": "Cryoablation",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "cyclophosphamide",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "docetaxel",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "epirubicin hydrochloride",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "fluorouracil",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "neoadjuvant therapy",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "therapeutic conventional surgery",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "hypofractionated radiation therapy",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "image-guided radiation therapy",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "radiation therapy",
+          "weight": 1
+        },
+        {
+          "source": "Centre Antoine Lacassagne",
+          "target": "stereotactic radiosurgery",
+          "weight": 1
+        },
+        {
+          "source": "Hebei Medical University Fourth Hospital",
+          "target": "Patients will initially receive trastuzumab, pyrotinib, and albumin-bound paclitaxel. Those who do not achieve a radiological response after Cycle 2 will switch to SHR-A1811 (a HER2-targeted antibody",
+          "weight": 1
+        },
+        {
+          "source": "Hebei Medical University Fourth Hospital",
+          "target": "Patients will initially receive trastuzumab, pyrotinib, and nab-paclitaxel. Those who achieve a partial response (PR) or complete response (CR) after cycle 2 will continue on the same regimen.",
+          "weight": 1
+        },
+        {
+          "source": "European Organisation for Research and Treatment of Cancer - EORTC",
+          "target": "liposomal amphotericin B",
+          "weight": 1
+        },
+        {
+          "source": "University of Kansas Medical Center",
+          "target": "Carboplatin",
+          "weight": 1
+        },
+        {
+          "source": "University of Kansas Medical Center",
+          "target": "Docetaxel",
+          "weight": 1
+        },
+        {
+          "source": "University of Kansas Medical Center",
+          "target": "Pembrolizumab",
+          "weight": 1
+        },
+        {
+          "source": "University of Kansas Medical Center",
+          "target": "Pegfilgrastim",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Interview",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Questionnaire Administration",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Support",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Support Group Therapy",
+          "weight": 1
+        },
+        {
+          "source": "Monopar Therapeutics",
+          "target": "MNPR-101-DFO*-89Zr",
+          "weight": 1
+        },
+        {
+          "source": "Monopar Therapeutics",
+          "target": "PET/CT Diagnostic Imaging",
+          "weight": 1
+        },
+        {
+          "source": "OHSU Knight Cancer Institute",
+          "target": "Aromatherapy with Essential Oils",
+          "weight": 1
+        },
+        {
+          "source": "University of Florida",
+          "target": "12-week Intervention Period",
+          "weight": 1
+        },
+        {
+          "source": "University of Florida",
+          "target": "12-week Observation Period",
+          "weight": 1
+        },
+        {
+          "source": "Guang'anmen Hospital of China Academy of Chinese Medical Sciences",
+          "target": "Electroacupuncture group",
+          "weight": 1
+        },
+        {
+          "source": "Guang'anmen Hospital of China Academy of Chinese Medical Sciences",
+          "target": "Sham electroacupuncture",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Adriamycin",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "cyclophosphamide",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "G-CSF",
+          "weight": 1
+        },
+        {
+          "source": "UNC Lineberger Comprehensive Cancer Center",
+          "target": "Ultrasound",
+          "weight": 1
+        },
+        {
+          "source": "Duke University",
+          "target": "Psychosocial Intervention",
+          "weight": 1
+        },
+        {
+          "source": "National Institute of Oncology, Hungary",
+          "target": "A: expander-silicone implant exchange and contralateral symmetrization with mastopexy and if needed with volume reduction",
+          "weight": 1
+        },
+        {
+          "source": "National Institute of Oncology, Hungary",
+          "target": "B: expander-silicone implant exchange with contralateral symmetrization with mastopexy and Ultrapro sling",
+          "weight": 1
+        },
+        {
+          "source": "National Institute of Oncology, Hungary",
+          "target": "C: expander-silicone implant exchange and contralateral symmetrization with mastopexy and silicone implant augmentation",
+          "weight": 1
+        },
+        {
+          "source": "National Institute of Oncology, Hungary",
+          "target": "D: expander-silicone implant exchange and contralateral symmetrization with mastopexy and Utrapro sling and silicone implant augmentation",
+          "weight": 1
+        },
+        {
+          "source": "National Institute of Oncology, Hungary",
+          "target": "E: unilateral simple mastectomy",
+          "weight": 1
+        },
+        {
+          "source": "National Institute of Oncology, Hungary",
+          "target": "F: after bilateral SSM, ASM, NSM, expander-implant exchange",
+          "weight": 1
+        },
+        {
+          "source": "AstraZeneca",
+          "target": "Fulvestrant",
+          "weight": 1
+        },
+        {
+          "source": "AstraZeneca",
+          "target": "Exemestane",
+          "weight": 1
+        },
+        {
+          "source": "Caigang Liu",
+          "target": "Shenbailing",
+          "weight": 1
+        },
+        {
+          "source": "Duke University",
+          "target": "Dasatinib",
+          "weight": 1
+        },
+        {
+          "source": "Scott and White Hospital & Clinic",
+          "target": "hot flashes attenuation",
+          "weight": 1
+        },
+        {
+          "source": "Scott and White Hospital & Clinic",
+          "target": "hypnotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Hellenic Cooperative Oncology Group",
+          "target": "NGS in blood and Formalin-Fixed Paraffin-Embedded (FFPE) tissue",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "enzastaurin",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "placebo",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "fulvestrant",
+          "weight": 1
+        },
+        {
+          "source": "Sandwell & West Birmingham Hospitals NHS Trust",
+          "target": "3 dimensional tomosynthesis imaging",
+          "weight": 1
+        },
+        {
+          "source": "Sandwell & West Birmingham Hospitals NHS Trust",
+          "target": "2 dimensional digital imaging",
+          "weight": 1
+        },
+        {
+          "source": "Abramson Cancer Center at Penn Medicine",
+          "target": "Survey",
+          "weight": 1
+        },
+        {
+          "source": "GBG Forschungs GmbH",
+          "target": "Capecitabine",
+          "weight": 1
+        },
+        {
+          "source": "GBG Forschungs GmbH",
+          "target": "Trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "Hadassah Medical Organization",
+          "target": "cetuximab paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "quality-of-life assessment",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "laboratory biomarker analysis",
+          "weight": 1
+        },
+        {
+          "source": "Institut de Canc\u00e9rologie de Lorraine",
+          "target": "mammography according to an auto-compression procedure",
+          "weight": 1
+        },
+        {
+          "source": "Institut de Canc\u00e9rologie de Lorraine",
+          "target": "mammography according to a standard procedure",
+          "weight": 1
+        },
+        {
+          "source": "Institut de Canc\u00e9rologie de Lorraine",
+          "target": "questionary",
+          "weight": 1
+        },
+        {
+          "source": "Centre Paul Strauss",
+          "target": "3D surface scan",
+          "weight": 1
+        },
+        {
+          "source": "Ottawa Hospital Research Institute",
+          "target": "GSK3326595",
+          "weight": 1
+        },
+        {
+          "source": "Fred Hutchinson Cancer Center",
+          "target": "Management of Therapy Complications",
+          "weight": 1
+        },
+        {
+          "source": "Fred Hutchinson Cancer Center",
+          "target": "Quality-of-Life Assessment",
+          "weight": 1
+        },
+        {
+          "source": "Fred Hutchinson Cancer Center",
+          "target": "Questionnaire Administration",
+          "weight": 1
+        },
+        {
+          "source": "Fred Hutchinson Cancer Center",
+          "target": "Telephone-Based Intervention",
+          "weight": 1
+        },
+        {
+          "source": "Cancer Institute and Hospital, Chinese Academy of Medical Sciences",
+          "target": "Radiotherapy + Novel Anti-tumor Drug",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Prexasertib",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Cisplatin",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Cetuximab",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "G-CSF",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Pemetrexed",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Fluorouracil",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "LY3023414",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Leucovorin",
+          "weight": 1
+        },
+        {
+          "source": "Barbara Ann Karmanos Cancer Institute",
+          "target": "Culturally adapted Online Genetic Counseling and Testing Information",
+          "weight": 1
+        },
+        {
+          "source": "SK Life Science, Inc.",
+          "target": "SKL27969",
+          "weight": 1
+        },
+        {
+          "source": "Biostar Pharma, Inc.",
+          "target": "Utidelone",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute, Egypt",
+          "target": "Bilevel erector spinae plane block",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute, Egypt",
+          "target": "Single level erector spinae plane block",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute, Egypt",
+          "target": "Intravenous morphine",
+          "weight": 1
+        },
+        {
+          "source": "Mridula George, MD",
+          "target": "Combination of liposomal doxorubicin",
+          "weight": 1
+        },
+        {
+          "source": "Stanford University",
+          "target": "Videoconferencing support group",
+          "weight": 1
+        },
+        {
+          "source": "HiberCell, Inc.",
+          "target": "Imprime PGG",
+          "weight": 1
+        },
+        {
+          "source": "HiberCell, Inc.",
+          "target": "Pembrolizumab",
+          "weight": 1
+        },
+        {
+          "source": "Eileen Connolly",
+          "target": "Merck 3475 Pembrolizumab",
+          "weight": 1
+        },
+        {
+          "source": "Eileen Connolly",
+          "target": "Intraoperative radiation therapy (IORT)",
+          "weight": 1
+        },
+        {
+          "source": "Alison Stopeck",
+          "target": "Denosumab",
+          "weight": 1
+        },
+        {
+          "source": "Rima Patel",
+          "target": "Dupilumab",
+          "weight": 1
+        },
+        {
+          "source": "Rima Patel",
+          "target": "Pembrolizumab",
+          "weight": 1
+        },
+        {
+          "source": "Rima Patel",
+          "target": "Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "Rima Patel",
+          "target": "Carboplatin",
+          "weight": 1
+        },
+        {
+          "source": "Bayer",
+          "target": "BAY1217389",
+          "weight": 1
+        },
+        {
+          "source": "Bayer",
+          "target": "Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "East and North Hertfordshire NHS Trust",
+          "target": "Moxibustion",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Biopsy",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Biospecimen Collection",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Computed Tomography",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Magnetic Resonance Imaging",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Magrolimab",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "Olaparib",
+          "weight": 1
+        },
+        {
+          "source": "International Agency for Research on Cancer",
+          "target": "Triage of clinical breast examination positive women using handheld ultrasound by non-radiologists.",
+          "weight": 1
+        },
+        {
+          "source": "Spanish Breast Cancer Research Group",
+          "target": "Exemestane",
+          "weight": 1
+        },
+        {
+          "source": "Spanish Breast Cancer Research Group",
+          "target": "Anastrozole",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "lapatinib",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "bevacizumab",
+          "weight": 1
+        },
+        {
+          "source": "University of Colorado, Denver",
+          "target": "Weight Loss",
+          "weight": 1
+        },
+        {
+          "source": "Shanghai Jiao Tong University School of Medicine",
+          "target": "Toremifene",
+          "weight": 1
+        },
+        {
+          "source": "Shanghai Jiao Tong University School of Medicine",
+          "target": "Tamoxifen",
+          "weight": 1
+        },
+        {
+          "source": "Universitas Airlangga",
+          "target": "Brief Acceptance and Commitment Therapy",
+          "weight": 1
+        },
+        {
+          "source": "Universitas Airlangga",
+          "target": "Standard Counseling",
+          "weight": 1
+        },
+        {
+          "source": "Universitas Airlangga",
+          "target": "Neoadjuvant Chemotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Wake Forest University Health Sciences",
+          "target": "yoga therapy",
+          "weight": 1
+        },
+        {
+          "source": "Wake Forest University Health Sciences",
+          "target": "internet-based intervention",
+          "weight": 1
+        },
+        {
+          "source": "Wake Forest University Health Sciences",
+          "target": "questionnaire administration",
+          "weight": 1
+        },
+        {
+          "source": "Sichuan Kelun-Biotech Biopharmaceutical Co., Ltd.",
+          "target": "SKB264",
+          "weight": 1
+        },
+        {
+          "source": "Sichuan Kelun-Biotech Biopharmaceutical Co., Ltd.",
+          "target": "KL-A167",
+          "weight": 1
+        },
+        {
+          "source": "Carevive Systems, Inc.",
+          "target": "Carevive PROmpt\u2122",
+          "weight": 1
+        },
+        {
+          "source": "Maltepe University",
+          "target": "erector spinae block",
+          "weight": 1
+        },
+        {
+          "source": "Maltepe University",
+          "target": "Control group",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "biopsy",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "magnetic resonance imaging",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "radiomammography",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "ultrasound imaging",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "gadopentetate dimeglumine",
+          "weight": 1
+        },
+        {
+          "source": "Alliance for Clinical Trials in Oncology",
+          "target": "chemotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Ramucirumab (IMC-1121B)",
+          "weight": 1
+        },
+        {
+          "source": "Eli Lilly and Company",
+          "target": "Eribulin",
+          "weight": 1
+        },
+        {
+          "source": "Fudan University",
+          "target": "T-DXd",
+          "weight": 1
+        },
+        {
+          "source": "Fudan University",
+          "target": "THP",
+          "weight": 1
+        },
+        {
+          "source": "Pierian Biosciences",
+          "target": "Laboratory Assay",
+          "weight": 1
+        },
+        {
+          "source": "Pierian Biosciences",
+          "target": "Mick Assay",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Ultrasound-guided core needle biopsy",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Denosumab",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Blood draw",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Calcium",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Vitamin D",
+          "weight": 1
+        },
+        {
+          "source": "AbbVie (prior sponsor, Abbott)",
+          "target": "ABT-767",
+          "weight": 1
+        },
+        {
+          "source": "University of Michigan Rogel Cancer Center",
+          "target": "MK-0752, Docetaxel, Pegfilgrastim",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Standard assistance",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Enhanced assistance",
+          "weight": 1
+        },
+        {
+          "source": "Geisinger Clinic",
+          "target": "Postcard",
+          "weight": 1
+        },
+        {
+          "source": "Geisinger Clinic",
+          "target": "Letter",
+          "weight": 1
+        },
+        {
+          "source": "Geisinger Clinic",
+          "target": "Auto-dialer",
+          "weight": 1
+        },
+        {
+          "source": "Geisinger Clinic",
+          "target": "Live call",
+          "weight": 1
+        },
+        {
+          "source": "Imperial College London",
+          "target": "Irosustat",
+          "weight": 1
+        },
+        {
+          "source": "Farin Amersi",
+          "target": "Carbohydrate restricted dietary intervention",
+          "weight": 1
+        },
+        {
+          "source": "Farin Amersi",
+          "target": "standard of care aromatase inhibitors",
+          "weight": 1
+        },
+        {
+          "source": "ETOP IBCSG Partners Foundation",
+          "target": "triptorelin",
+          "weight": 1
+        },
+        {
+          "source": "ETOP IBCSG Partners Foundation",
+          "target": "degarelix",
+          "weight": 1
+        },
+        {
+          "source": "ETOP IBCSG Partners Foundation",
+          "target": "letrozole",
+          "weight": 1
+        },
+        {
+          "source": "AHS Cancer Control Alberta",
+          "target": "Aloe barbadensis topical application in a moisturizing cream vehicle.",
+          "weight": 1
+        },
+        {
+          "source": "Universidad de Granada",
+          "target": "Mediterranean diet, physical exercise and mindfulness workshops",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "caffeine",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "diclofenac",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "omeprazole",
+          "weight": 1
+        },
+        {
+          "source": "Novartis Pharmaceuticals",
+          "target": "midazolam",
+          "weight": 1
+        },
+        {
+          "source": "Melinda Telli",
+          "target": "Talazoparib Tosylate",
+          "weight": 1
+        },
+        {
+          "source": "Centre Jean Perrin",
+          "target": "99mTc-NTP 15-5 at a diagnostic activity of 5 MBq/kg",
+          "weight": 1
+        },
+        {
+          "source": "Centre Jean Perrin",
+          "target": "99mTc-NTP 15-5 at a diagnostic activity of 10 MBq/kg",
+          "weight": 1
+        },
+        {
+          "source": "Centre Jean Perrin",
+          "target": "99mTc-NTP 15-5 at a diagnostic activity of 15 MBq/kg",
+          "weight": 1
+        },
+        {
+          "source": "NYU Langone Health",
+          "target": "Caffeine anhydrous 5% added to Lipoderm Cream Base.",
+          "weight": 1
+        },
+        {
+          "source": "NYU Langone Health",
+          "target": "Lipoderm Cream Base",
+          "weight": 1
+        },
+        {
+          "source": "Incyte Corporation",
+          "target": "INCB007839 300mg BID",
+          "weight": 1
+        },
+        {
+          "source": "Incyte Corporation",
+          "target": "Trastuzumab",
+          "weight": 1
+        },
+        {
+          "source": "Incyte Corporation",
+          "target": "Vinorelbine",
+          "weight": 1
+        },
+        {
+          "source": "The Netherlands Cancer Institute",
+          "target": "Quiremspheres\u2122",
+          "weight": 1
+        },
+        {
+          "source": "Wenjin Yin",
+          "target": "Trastuzumab deruxtecan",
+          "weight": 1
+        },
+        {
+          "source": "M.D. Anderson Cancer Center",
+          "target": "Melatonin",
+          "weight": 1
+        },
+        {
+          "source": "M.D. Anderson Cancer Center",
+          "target": "Placebo",
+          "weight": 1
+        },
+        {
+          "source": "M.D. Anderson Cancer Center",
+          "target": "Questionnaire",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "sorafenib tosylate",
+          "weight": 1
+        },
+        {
+          "source": "National Cancer Institute (NCI)",
+          "target": "anastrozole",
+          "weight": 1
+        },
+        {
+          "source": "Hoffmann-La Roche",
+          "target": "Trastuzumab Emtansine",
+          "weight": 1
+        },
+        {
+          "source": "Maastricht Radiation Oncology",
+          "target": "Mamma board",
+          "weight": 1
+        },
+        {
+          "source": "Yeon Hee Park",
+          "target": "Sacituzumab Govitecan with pegfilgrastim",
+          "weight": 1
+        },
+        {
+          "source": "NRG Oncology",
+          "target": "Radiation and Endocrine Therapy (Tamoxifen, Anastrozol, Letrozole, Exemestane)",
+          "weight": 1
+        },
+        {
+          "source": "NRG Oncology",
+          "target": "Endocrine Therapy (Tamoxifen, Anastrozol, Letrozole, Exemestane)",
+          "weight": 1
+        },
+        {
+          "source": "Vastra Gotaland Region",
+          "target": "Plasma NT-proBNP",
+          "weight": 1
+        },
+        {
+          "source": "University of Valencia",
+          "target": "CBCT",
+          "weight": 1
+        },
+        {
+          "source": "University of Valencia",
+          "target": "TAU",
+          "weight": 1
+        },
+        {
+          "source": "Massachusetts General Hospital",
+          "target": "Talazoparib",
+          "weight": 1
+        },
+        {
+          "source": "Massachusetts General Hospital",
+          "target": "Sacituzumab Govitecan",
+          "weight": 1
+        },
+        {
+          "source": "Exelixis",
+          "target": "XL647",
+          "weight": 1
+        },
+        {
+          "source": "Exelixis",
+          "target": "XL147",
+          "weight": 1
+        },
+        {
+          "source": "The University of Texas Health Science Center at San Antonio",
+          "target": "Avasopasem",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Biopsy",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Biospecimen Collection",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Computed Tomography",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Echocardiography",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Magnetic Resonance Imaging",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Pegylated Liposomal Doxorubicin Hydrochloride",
+          "weight": 1
+        },
+        {
+          "source": "Roswell Park Cancer Institute",
+          "target": "Tamoxifen",
+          "weight": 1
+        },
+        {
+          "source": "Genor Biopharma Co., Ltd.",
+          "target": "GB491 combined with Letrozole",
+          "weight": 1
+        },
+        {
+          "source": "Genor Biopharma Co., Ltd.",
+          "target": "Placebo combined with Letrozole",
+          "weight": 1
+        },
+        {
+          "source": "National Center for Research Resources (NCRR)",
+          "target": "Doxil",
+          "weight": 1
+        },
+        {
+          "source": "National Center for Research Resources (NCRR)",
+          "target": "heat treatment",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Inframammary Fold Incision or Lateral Radial Incision",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Lateral Radial Incision",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Inframammary Fold Incision",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Laser-assisted fluorescence angiography",
+          "weight": 1
+        },
+        {
+          "source": "Washington University School of Medicine",
+          "target": "Indocyanine Green",
+          "weight": 1
+        },
+        {
+          "source": "RenJi Hospital",
+          "target": "Serplulimab",
+          "weight": 1
+        },
+        {
+          "source": "RenJi Hospital",
+          "target": "Paclitaxel",
+          "weight": 1
+        },
+        {
+          "source": "RenJi Hospital",
+          "target": "Carboplatin",
+          "weight": 1
+        },
+        {
+          "source": "Josh Peterson",
+          "target": "Implementation strategies",
+          "weight": 1
+        },
+        {
+          "source": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+          "target": "Hydroxychloroquine",
+          "weight": 1
+        },
+        {
+          "source": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+          "target": "Sacituzumab Govitecan",
+          "weight": 1
+        },
+        {
+          "source": "Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University",
+          "target": "Trastuzumab Deruxtecan",
+          "weight": 1
+        },
+        {
+          "source": "Sidney Kimmel Comprehensive Cancer Center at Johns Hopkins",
+          "target": "PlasmaBlade 3.0S",
+          "weight": 1
+        },
+        {
+          "source": "Arizona State University",
+          "target": "Qigong/Tai Chi Easy",
+          "weight": 1
+        },
+        {
+          "source": "Arizona State University",
+          "target": "Sham Qigong",
+          "weight": 1
+        },
+        {
+          "source": "Arizona State University",
+          "target": "Educational Support",
+          "weight": 1
+        },
+        {
+          "source": "Virginia Commonwealth University",
+          "target": "Physical Activity Intervention (PAI)",
+          "weight": 1
+        },
+        {
+          "source": "Virginia Commonwealth University",
+          "target": "Healthy Living Control",
+          "weight": 1
+        },
+        {
+          "source": "Shanghai Jiao Tong University School of Medicine",
+          "target": "Decitabine",
+          "weight": 1
+        },
+        {
+          "source": "Shanghai Jiao Tong University School of Medicine",
+          "target": "Carboplatin",
+          "weight": 1
+        },
+        {
+          "source": "Zagazig University",
+          "target": "Adjuvant Ultra hypofractionation radiotherapy",
+          "weight": 1
+        },
+        {
+          "source": "Zagazig University",
+          "target": "Adjuvant Hypofarctionated radiotherapy",
+          "weight": 1
+        },
+        {
+          "source": "SWOG Cancer Research Network",
+          "target": "management of therapy complications",
+          "weight": 1
+        }
+      ],
+      "rendering_hints": {
+        "color_scheme": "categorical",
+        "show_legend": false,
+        "scale_type": "linear"
+      },
+      "citations": null
+    }
+  ],
+  "meta": {
+    "request_id": "24f07a77-7fcc-4ef8-b712-04252ab7e067",
+    "original_query": "Show a network of sponsors and drugs for breast cancer trials",
+    "input_mode": "supplement",
+    "input_interpretation": {
+      "input_mode": "supplement",
+      "from_query": {
+        "req1": {
+          "query.cond": "breast cancer"
+        }
+      },
+      "from_params": {},
+      "conflicts": [],
+      "resolution": "Query is primary; structured params confirm/add (supplement).",
+      "ignored_params": {}
+    },
+    "query_complexity": "simple",
+    "filters_applied": {
+      "query.cond": "breast cancer"
+    },
+    "total_studies_analyzed": 200,
+    "data_retrieval_strategy": "study_search",
+    "api_calls": [
+      {
+        "endpoint": "/studies",
+        "params": {
+          "query.cond": "breast cancer",
+          "pageSize": 200,
+          "countTotal": "true"
+        },
+        "timestamp": "2026-07-21T21:54:58.548728+00:00",
+        "record_count": 200,
+        "http_status": 200,
+        "duration_ms": 362
+      }
+    ],
+    "stage_timings": {
+      "query_analysis": 2967.3,
+      "data_retrieval": 386.6,
+      "aggregation_task1": 0.4,
+      "viz_generation_task1": 12624.7
+    },
+    "api_version": "2.0.5",
+    "data_refresh": "2026-07-21T09:00:05",
+    "notes": [],
+    "limitations": [
+      "Requirement req1: analyzed 200 of 16627 matching studies (Reached max_studies cap or page limit)."
+    ],
+    "warnings": [],
+    "source": "clinicaltrials.gov"
+  }
+}

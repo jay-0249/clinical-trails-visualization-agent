@@ -7,9 +7,46 @@ encoding follows the contract, and the data is injected verbatim.
 
 import pytest
 
-from app.pipeline.viz_generator import _verify_encoding, generate
+from app.pipeline.viz_generator import _normalize_encoding, _verify_encoding, generate
 from app.schemas.intent import AggregationSpec, AnalysisTask
 from app.schemas.response import VisualizationSpec
+
+
+# --- hermetic: encoding key normalization (Bug 2 fix) ---------------------
+
+
+def test_normalize_encoding_spatial_synonym():
+    spec = VisualizationSpec(
+        task_id="t",
+        description="d",
+        type="choropleth",
+        type_category="spatial",
+        title="Trials by Country",
+        encoding={"country": {"field": "countries"}, "value": {"field": "value"}},
+        data=[],
+    )
+    _normalize_encoding(spec)
+    assert "location" in spec.encoding and "country" not in spec.encoding
+    assert spec.encoding["location"]["field"] == "countries"
+    _verify_encoding(spec, [{"countries": "US", "value": 3}])  # now passes the contract
+
+
+def test_normalize_encoding_relational_synonyms():
+    spec = VisualizationSpec(
+        task_id="t",
+        description="d",
+        type="network",
+        type_category="relational",
+        title="Network",
+        encoding={
+            "from": {"field": "source"},
+            "to": {"field": "target"},
+            "weight": {"field": "weight"},
+        },
+        data=[],
+    )
+    _normalize_encoding(spec)
+    assert {"source", "target", "weight"} <= set(spec.encoding)
 
 
 def make_task(categories, description, task_id="t1"):

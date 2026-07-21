@@ -47,6 +47,36 @@ _DEFAULT_SCHEME = {
     "distribution": "sequential_blue",
 }
 
+# Synonym -> contract key per category. A small model sometimes names an encoding
+# key off-contract (e.g. spatial "country" instead of "location"); we rename it
+# so the frontend always receives the contract keys.
+_ENCODING_SYNONYMS = {
+    "spatial": {"country": "location", "region": "location", "geo": "location", "area": "location"},
+    "categorical": {"label": "category", "name": "category", "group": "category"},
+    "relational": {"from": "source", "node1": "source", "to": "target", "node2": "target"},
+}
+
+
+def _normalize_encoding(spec: VisualizationSpec, request_id: str | None = None) -> None:
+    """Rename known synonym encoding keys to the contract keys (mutates spec)."""
+    synonyms = _ENCODING_SYNONYMS.get(spec.type_category)
+    if not synonyms or not isinstance(spec.encoding, dict):
+        return
+    renamed = {}
+    for old, new in synonyms.items():
+        if old in spec.encoding and new not in spec.encoding:
+            spec.encoding[new] = spec.encoding.pop(old)
+            renamed[old] = new
+    if renamed:
+        log_event(
+            _logger,
+            logging.INFO,
+            "encoding_normalized",
+            request_id=request_id,
+            type_category=spec.type_category,
+            renamed=renamed,
+        )
+
 
 class VizGenerationError(RuntimeError):
     """Stage 4 could not produce a valid VisualizationSpec."""
@@ -143,6 +173,7 @@ async def generate(
 
         try:
             spec = VisualizationSpec.model_validate(json.loads(content))
+            _normalize_encoding(spec, request_id)
             _verify_encoding(spec, aggregated_data)
             # Trust code, not the LLM, for identity + data.
             spec.task_id = task.task_id

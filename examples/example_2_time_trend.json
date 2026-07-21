@@ -1,0 +1,218 @@
+{
+  "visualizations": [
+    {
+      "task_id": "task1",
+      "description": "A line chart is chosen because the data is a single metric (number of lung cancer trials) indexed by time (start_year), making it ideal for showing year-over-year change since 2015.",
+      "type": "line_chart",
+      "type_category": "temporal",
+      "title": "Lung Cancer Trials per Year (Change Since 2015)",
+      "encoding": {
+        "time": {
+          "field": "start_year",
+          "granularity": "year"
+        },
+        "value": {
+          "field": "value"
+        },
+        "series": {
+          "field": null
+        },
+        "x_axis": {
+          "field": "start_year",
+          "type": "temporal"
+        },
+        "y_axis": {
+          "field": "value",
+          "type": "quantitative"
+        }
+      },
+      "data": [
+        {
+          "start_year": 1990,
+          "value": 1
+        },
+        {
+          "start_year": 1999,
+          "value": 1
+        },
+        {
+          "start_year": 2000,
+          "value": 3
+        },
+        {
+          "start_year": 2001,
+          "value": 1
+        },
+        {
+          "start_year": 2002,
+          "value": 2
+        },
+        {
+          "start_year": 2003,
+          "value": 3
+        },
+        {
+          "start_year": 2004,
+          "value": 2
+        },
+        {
+          "start_year": 2005,
+          "value": 6
+        },
+        {
+          "start_year": 2006,
+          "value": 6
+        },
+        {
+          "start_year": 2007,
+          "value": 6
+        },
+        {
+          "start_year": 2008,
+          "value": 8
+        },
+        {
+          "start_year": 2009,
+          "value": 3
+        },
+        {
+          "start_year": 2010,
+          "value": 2
+        },
+        {
+          "start_year": 2011,
+          "value": 4
+        },
+        {
+          "start_year": 2012,
+          "value": 7
+        },
+        {
+          "start_year": 2013,
+          "value": 1
+        },
+        {
+          "start_year": 2014,
+          "value": 7
+        },
+        {
+          "start_year": 2015,
+          "value": 13
+        },
+        {
+          "start_year": 2016,
+          "value": 13
+        },
+        {
+          "start_year": 2017,
+          "value": 12
+        },
+        {
+          "start_year": 2018,
+          "value": 9
+        },
+        {
+          "start_year": 2019,
+          "value": 4
+        },
+        {
+          "start_year": 2020,
+          "value": 8
+        },
+        {
+          "start_year": 2021,
+          "value": 19
+        },
+        {
+          "start_year": 2022,
+          "value": 16
+        },
+        {
+          "start_year": 2023,
+          "value": 16
+        },
+        {
+          "start_year": 2024,
+          "value": 13
+        },
+        {
+          "start_year": 2025,
+          "value": 7
+        },
+        {
+          "start_year": 2026,
+          "value": 4
+        },
+        {
+          "start_year": "Unknown",
+          "value": 3
+        }
+      ],
+      "rendering_hints": {
+        "color_scheme": "sequential_blue",
+        "orientation": "horizontal",
+        "scale_type": "linear",
+        "sort_order": "ascending",
+        "show_legend": false,
+        "handle_unknown_time": "place_at_end"
+      },
+      "citations": null
+    }
+  ],
+  "meta": {
+    "request_id": "54441409-67c6-4236-9a01-62d2e5e9fbc8",
+    "original_query": "How has the number of trials for lung cancer changed per year since 2015?",
+    "input_mode": "supplement",
+    "input_interpretation": {
+      "input_mode": "supplement",
+      "from_query": {
+        "req1": {
+          "query.cond": "lung cancer",
+          "start_year": {
+            "$gte": 2015
+          }
+        }
+      },
+      "from_params": {},
+      "conflicts": [],
+      "resolution": "Query is primary; structured params confirm/add (supplement).",
+      "ignored_params": {}
+    },
+    "query_complexity": "simple",
+    "filters_applied": {
+      "query.cond": "lung cancer"
+    },
+    "total_studies_analyzed": 200,
+    "data_retrieval_strategy": "study_search",
+    "api_calls": [
+      {
+        "endpoint": "/studies",
+        "params": {
+          "query.cond": "lung cancer",
+          "pageSize": 200,
+          "countTotal": "true"
+        },
+        "timestamp": "2026-07-21T21:54:32.493990+00:00",
+        "record_count": 200,
+        "http_status": 200,
+        "duration_ms": 361
+      }
+    ],
+    "stage_timings": {
+      "query_analysis": 3225.6,
+      "data_retrieval": 386.9,
+      "aggregation_task1": 8.2,
+      "viz_generation_task1": 5638.4
+    },
+    "api_version": "2.0.5",
+    "data_refresh": "2026-07-21T09:00:05",
+    "notes": [
+      "Stripped unsupported API params: start_year"
+    ],
+    "limitations": [
+      "Requirement req1: analyzed 200 of 14367 matching studies (Reached max_studies cap or page limit)."
+    ],
+    "warnings": [],
+    "source": "clinicaltrials.gov"
+  }
+}
