@@ -65,7 +65,7 @@ async def analyze(
     for attempt in range(2):  # 1 try + 1 corrective retry
         start = time.perf_counter()
         resp = await client.chat.completions.create(
-            model=settings.llm_model_main,
+            model=settings.llm_model_query_analyzer,
             messages=messages,
             response_format={"type": "json_object"},
             temperature=0,

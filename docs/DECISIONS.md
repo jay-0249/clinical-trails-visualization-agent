@@ -225,3 +225,23 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 - [x] Comparison query produces 2 data requirements with entity_tags — Q2.
 - [x] Override mode changes behavior — Q3.
 - [x] LLM call logged with model, tokens, duration — `llm_call` event (model `gpt-4o-2024-08-06`, prompt/completion tokens, duration_ms).
+
+---
+
+## Phase 8 — Viz Generator (Stage 4 LLM)
+
+**2026-07-21 — Per-stage model configuration**
+- **Chose:** One model per LLM stage instead of a shared main/subagent pair: `llm_model_query_analyzer` (default `gpt-4o`, Stage 1 planning), `llm_model_viz_generator` (Stage 4 viz spec), `llm_model_extractor` (default `gpt-4o-mini`, Stage 2.5 extraction, v2). Env vars `LLM_MODEL_QUERY_ANALYZER` / `LLM_MODEL_VIZ_GENERATOR` / `LLM_MODEL_EXTRACTOR`.
+- **Over:** The earlier two-field `LLM_MODEL_MAIN` / `LLM_MODEL_SUBAGENT` split.
+- **Because:** Each stage has different needs (planning wants reasoning; viz-spec is formatting; extraction is bulk). Naming by stage makes the config self-documenting and lets each be tuned independently. Supersedes the Phase 0 two-model naming.
+
+**2026-07-21 — Stage 4 model choice (rendering_hints diagnostic)**
+- **Chose:** `gpt-5.4-nano` for `llm_model_viz_generator`, **over** `gpt-4o-mini`, because the diagnostic showed `rendering_hints` present **3/3 vs 1/9** (relational/matrix/distribution). Both models pick the correct chart type every time; only gpt-4o-mini omits the optional hints (a model limitation, not a prompt gap). `gpt-4.1-mini` was also 3/3 but nano is the smaller tier with the richest hints.
+- **Plus a defensive fallback (fix B):** `generate()` injects a per-category `color_scheme` when `rendering_hints` comes back empty — belt-and-suspenders so the frontend always has a scheme if a future model regresses.
+- **Data injection stands regardless of model:** `generate()` overwrites `spec.data` with the real aggregated rows, so the model never supplies data — "never invent data" is structural, not prompt-dependent.
+
+**Checkpoint (from PLANNING.md):**
+- [x] Produces valid VisualizationSpec — 5-shape live verification.
+- [x] encoding matches type_category contract — `_verify_encoding` (+ retry on mismatch).
+- [x] description justifies type choice — prompt-enforced; validated non-empty.
+- [x] title is specific, rendering_hints present — model emits hints (gpt-5.4-nano) with a code fallback guaranteeing presence.

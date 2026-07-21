@@ -5,6 +5,11 @@ from app.schemas.response import VisualizationSpec
 
 # Prompt version: 2026-07-21-a
 # Changes: Initial version with type_category, encoding contracts, data-shape reasoning
+# 2026-07-21-b (build fix, not a prompt-content change): builder now fills the
+#   {{...}} placeholders via str.replace. str.format is unusable here — the
+#   template uses {{ }} placeholders AND the encoding-contract section contains
+#   literal single braces ({"category": {"field": "..."}}) that format() would
+#   try (and fail) to interpret as fields.
 
 VIZ_PROMPT = """You are a data visualization specialist. Your job is to take
 aggregated clinical trials data and produce a visualization
@@ -138,12 +143,19 @@ Do NOT default to bar chart. Reason about the data shape:
    type_category is correct and encoding follows the contract."""
 
 def build_viz_generator_prompt(task, aggregated_data, original_query) -> str:
-    return VIZ_PROMPT.format(
-        task_id=task.task_id,
-        task_description=task.description,
-        candidate_categories=task.candidate_viz_categories,
-        aggregated_data=json.dumps(aggregated_data[:50], indent=2),
-        data_row_count=len(aggregated_data),
-        original_query=original_query,
-        viz_spec_schema=json.dumps(VisualizationSpec.model_json_schema(), indent=2),
-    )
+    """Assemble the Stage 4 prompt. Only the first 50 rows go to the LLM (for its
+    type/encoding decision); the full data is injected into the response by the
+    pipeline, so the model never has to echo it back correctly."""
+    replacements = {
+        "{{task_id}}": task.task_id,
+        "{{task_description}}": task.description,
+        "{{candidate_categories}}": ", ".join(task.candidate_viz_categories),
+        "{{original_query}}": original_query,
+        "{{data_row_count}}": str(len(aggregated_data)),
+        "{{aggregated_data}}": json.dumps(aggregated_data[:50], indent=2, default=str),
+        "{{viz_spec_schema}}": json.dumps(VisualizationSpec.model_json_schema(), indent=2),
+    }
+    prompt = VIZ_PROMPT
+    for placeholder, value in replacements.items():
+        prompt = prompt.replace(placeholder, value)
+    return prompt
