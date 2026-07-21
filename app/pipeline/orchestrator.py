@@ -23,7 +23,7 @@ from app.schemas.response import (
     PipelineResponse,
     ResponseMeta,
 )
-from app.schemas.trial_record import PipelineContext
+from app.schemas.trial_record import PipelineContext, StudyRecord
 from app.utils.logger import get_logger, log_event, timed_stage
 from app.utils.validators import (
     IntentValidationError,
@@ -129,11 +129,48 @@ def merge_and_validate(
     return intent, interp
 
 
-def _collect_filters(intent: QueryIntent) -> dict:
+def _apply_year_filters(
+    studies: list[StudyRecord], request: QueryRequest, ctx: PipelineContext
+) -> list[StudyRecord]:
+    """Post-filter by start_year range (CT.gov v2 has no year-range param).
+
+    Records with an unknown start_year are excluded (can't verify the range).
+    """
+    if not request.start_year and not request.end_year:
+        return studies
+    before = len(studies)
+    filtered = studies
+    if request.start_year:
+        filtered = [
+            s for s in filtered if s.start_year is not None and s.start_year >= request.start_year
+        ]
+    if request.end_year:
+        filtered = [
+            s for s in filtered if s.start_year is not None and s.start_year <= request.end_year
+        ]
+    after = len(filtered)
+    if after == 0 and before > 0:
+        ctx.add_warning(
+            f"All {before} studies filtered out by year range "
+            f"{request.start_year or 'any'}-{request.end_year or 'any'}."
+        )
+    elif after < before:
+        ctx.add_note(
+            f"Year filter {request.start_year or 'any'}-{request.end_year or 'any'}: "
+            f"{before} -> {after} studies."
+        )
+    return filtered
+
+
+def _collect_filters(intent: QueryIntent, request: QueryRequest) -> dict:
     out: dict = {}
     for req in intent.data_requirements:
         out.update(req.search_params)
         out.update(req.filter_params)
+    if request.start_year:
+        out["start_year_gte"] = request.start_year
+    if request.end_year:
+        out["end_year_lte"] = request.end_year
     return out
 
 
@@ -145,7 +182,7 @@ def build_meta(request, intent, ctx, interpretation, reference_cache) -> Respons
         input_mode=request.input_mode,
         input_interpretation=interpretation,
         query_complexity=intent.query_complexity,
-        filters_applied=_collect_filters(intent),
+        filters_applied=_collect_filters(intent, request),
         total_studies_analyzed=len(ctx.get_all_studies()),
         data_retrieval_strategy=",".join(strategies),
         api_calls=ctx.api_calls_made,
@@ -249,6 +286,7 @@ async def execute(request: QueryRequest, reference_cache, ct_client) -> Pipeline
             if r.requirement_id in req_ids and r.entity_tag
         ]
         studies = ctx.get_studies_by_tags(tags) if tags else ctx.get_all_studies()
+        studies = _apply_year_filters(studies, request, ctx)
 
         with timed_stage(_logger, ctx, f"aggregation_{task.task_id}"):
             aggregated = aggregate(

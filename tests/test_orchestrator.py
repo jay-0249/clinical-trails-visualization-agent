@@ -59,6 +59,30 @@ def _ctx():
     return PipelineContext(request_id="rid")
 
 
+def _study(nct, year):
+    return StudyRecord(
+        nct_id=nct,
+        title="t",
+        status="RECRUITING",
+        phases=[],
+        phase_label="N/A",
+        conditions=[],
+        interventions=[],
+        intervention_types=[],
+        sponsor_name=None,
+        sponsor_class=None,
+        start_year=year,
+        start_month=None,
+        completion_year=None,
+        countries=[],
+        cities=[],
+        enrollment=None,
+        study_type=None,
+        excerpt="",
+        source_query="q",
+    )
+
+
 def mock_cache():
     return types.SimpleNamespace(
         valid_phases=["PHASE1", "PHASE2", "PHASE3", "PHASE4", "NA"],
@@ -182,6 +206,49 @@ def test_strip_unsupported_params():
     assert req.search_params == {"query.cond": "lung cancer"}  # start_year stripped
     assert req.filter_params == {"filter.phase": "PHASE3"}  # bogus stripped
     assert any("start_year" in n and "bogus" in n for n in ctx.notes)
+
+
+# --- V2.2 year filtering --------------------------------------------------
+
+
+def test_apply_year_filters_range():
+    from app.pipeline.orchestrator import _apply_year_filters
+
+    ctx = _ctx()
+    studies = [_study("a", 2018), _study("b", 2021), _study("c", 2024), _study("d", None)]
+    req = QueryRequest(query="lung cancer", start_year=2020, end_year=2025)
+    out = _apply_year_filters(studies, req, ctx)
+    assert {s.nct_id for s in out} == {"b", "c"}  # 2018 before-range, None unverifiable
+    assert any("Year filter" in n for n in ctx.notes)
+
+
+def test_apply_year_filters_noop_without_years():
+    from app.pipeline.orchestrator import _apply_year_filters
+
+    ctx = _ctx()
+    studies = [_study("a", 2018)]
+    assert _apply_year_filters(studies, QueryRequest(query="abc"), ctx) == studies
+    assert not ctx.notes and not ctx.warnings
+
+
+def test_apply_year_filters_all_filtered_warns():
+    from app.pipeline.orchestrator import _apply_year_filters
+
+    ctx = _ctx()
+    studies = [_study("a", 2010), _study("b", 2011)]
+    out = _apply_year_filters(studies, QueryRequest(query="abc", start_year=2020), ctx)
+    assert out == []
+    assert any("filtered out" in w for w in ctx.warnings)
+
+
+def test_collect_filters_includes_years():
+    from app.pipeline.orchestrator import _collect_filters
+
+    intent = _intent([_req("r1", search={"query.cond": "lung"})])
+    req = QueryRequest(query="lung", start_year=2020, end_year=2025)
+    f = _collect_filters(intent, req)
+    assert f["start_year_gte"] == 2020 and f["end_year_lte"] == 2025
+    assert f["query.cond"] == "lung"
 
 
 # --- execute error path (hermetic — fails at pre-validation, no network) ---

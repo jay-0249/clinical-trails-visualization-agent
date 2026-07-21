@@ -338,3 +338,11 @@ Log format per phase: **Chose / Over / Because / Tradeoff.**
 **2026-07-21 — Strip citations from the LLM prompt; inject into the response**
 - Citations already flowed end-to-end (aggregator collects `nct_id`+`excerpt` per group; viz_generator injects `spec.data = aggregated_data`). V2.1 removes citations from the data the LLM sees (`_strip_citations` — dict-comprehension copies, never mutates the originals) so they don't bloat the prompt or distract type selection, while the full data-with-citations is still injected into `spec.data`.
 - Verified live: `include_citations=true, max_citations_per_group=3` → each group carries 3 real citations (nct_id + excerpt). No-mutation guaranteed by `test_strip_citations_does_not_mutate_originals`.
+
+---
+
+## V2.2 — Year Filtering
+
+**2026-07-21 — Post-retrieval year filter**
+- CT.gov v2 has no year-range param, so `_apply_year_filters` (orchestrator) filters StudyRecords by `start_year` after retrieval, per task, before aggregation. Records with unknown `start_year` are excluded (can't verify the range); a note records `before -> after`, and a warning fires if everything is filtered out. `filters_applied` gains `start_year_gte`/`end_year_lte`.
+- Verified live: `start_year=2020, end_year=2025` on lung cancer → 200 retrieved, filtered to 79 in range; filters + note surfaced in metadata.
