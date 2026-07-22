@@ -2,6 +2,13 @@
 
 An AI-enabled backend service that converts natural-language questions about clinical trials into structured visualization specifications, backed by live data from the ClinicalTrials.gov API.
 
+> ## Release 1 (stable submission)
+>
+> This is the **stable submission** — the full pipeline (Phases 0–12) plus
+> **V2.1 deep citations** and **V2.2 year filtering**, deployed and verified live.
+> `release-1` is the stable submission branch; ongoing development (V2.3+)
+> continues on `main`.
+
 ## Quick Start
 
 ```bash
@@ -316,22 +323,21 @@ Logs are structured JSON with `request_id` on every entry, enabling full request
 
 ## Limitations and Future Improvements
 
-**Current limitations:**
+**Current limitations (Release 1):**
 
 - Free-text extraction (Stage 2.5) is architected but not implemented — queries requiring data from study descriptions or eligibility criteria (e.g., dosage, endpoints) won't produce results.
-- `start_year`/`end_year` hints are recorded in metadata but not applied as hard API filters — CT.gov v2 has no simple year-range parameter, so the year dimension is handled by temporal aggregation (`group_by=[start_year]`), not by filtering.
-- The `field_stats` and `study_detail` retrieval strategies are best-effort: `field_stats` (a v2 pre-aggregation strategy) isn't wired into the record-based aggregator, so when the planner selects it the retriever falls back to `study_search` (capped sample, noted in metadata). `study_search` is the fully exercised path.
+- The `field_stats` and `study_detail` retrieval strategies are best-effort; when the planner selects `field_stats` the retriever falls back to `study_search` (capped sample, noted in metadata). `study_search` is the fully exercised path. (Note: the CT.gov `/stats/field/values` endpoint is global-only — it rejects condition/drug/status scoping — which shapes the V2.3 design below.)
 - Dependent queries (task B depends on task A results) are architected but not implemented.
 - No typo/synonym handling — "Keytruda" won't resolve to "Pembrolizumab".
 
-**What I would improve with more time:**
+## Future Enhancements
 
-- Implement the `field_stats` strategy end-to-end for efficient broad distribution queries (100K+ matches without capping).
-- Apply `start_year`/`end_year` as real filters (via the CT.gov advanced query syntax or post-retrieval filtering).
-- Add entity normalization via LLM (drug synonyms, condition aliases).
-- Add a simple demo UI (HTML + a charting lib) that renders the viz specs.
-- Add a caching layer for repeated API queries within a time window.
-- Implement the free-text extraction pipeline with batching for large result sets.
+Beyond Release 1, development continues on `main`:
+
+- **V2.3 — `field_stats`:** use `/stats/field/values` for true, uncapped **global** distributions (all trials by phase/status/sponsor class), avoiding the `study_search` sample cap. Scoped queries stay on `study_search` (the stats endpoint is global-only).
+- **V2.4 — Typo / synonym handling:** LLM-based entity normalization (drug synonyms like Keytruda → Pembrolizumab, condition aliases).
+- **V2.5 — Free-text extraction:** implement Stage 2.5 extraction from study descriptions / eligibility criteria, with batching for large result sets.
+- **Other:** a demo UI that renders the viz specs, and a caching layer for repeated queries within a time window.
 
 ---
 
